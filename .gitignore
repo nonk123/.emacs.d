@@ -1,0 +1,10 @@
+*
+!.gitignore
+
+!README.md
+!LICENSE
+
+!early-init.el
+!init.el
+
+!snippets
