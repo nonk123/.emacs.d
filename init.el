@@ -9,15 +9,18 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load-file custom-file)
 
-(defvar bootstrap-version 6)
-
+(defvar bootstrap-version)
 (let ((bootstrap-file
-        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory)))
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-      (url-retrieve-synchronously
-        "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-        'silent 'inhibit-cookies)
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -151,11 +154,11 @@
 
 (add-to-list 'auto-mode-alist '("LICENSE\\'" . text-mode))
 
+(global-flycheck-mode 1)
+
 (bind-keys :map flycheck-mode-map
 	   ("C-c C-n" . flycheck-next-error)
 	   ("C-c C-p" . flycheck-previous-error))
-
-(global-flycheck-mode 1)
 
 (setq projectile-auto-discover t)
 (setq projectile-file-exists-remote-cache-expire nil)
@@ -191,6 +194,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
 
+(require 'ccls)
+
 (require 'aggressive-indent)
 (defvar nonk/aggressive-indent-modes '(lisp-data-mode))
 (defvar nonk/ignore-lsp-modes '(sh-mode ld-script-mode lisp-data-mode))
@@ -215,9 +220,6 @@
 
 (defvar nonk/mode-extras nil)
 
-(require 'cmake-mode)
-(setq nonk/mode-extras '((cmake-mode after-save-hook cmake-utils-configure)))
-
 (defun nonk/start-coding ()
   (interactive)
   (diminish 'auto-revert-mode) ; something re-enables it unless run inside a hook???
@@ -233,7 +235,6 @@
           (setq stop t)))
       (setq ptr (cdr ptr))))
   (unless (-any-p #'derived-mode-p nonk/ignore-lsp-modes)
-    (require 'ccls)
     (lsp nil)
     (lsp-ui-mode 1)))
 
