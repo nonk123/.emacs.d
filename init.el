@@ -1,5 +1,11 @@
 ;; -*- lexical-binding: t; -*-
 
+(defvar nonk/windows-p (and (string-match-p "AppData\\\\Roaming" (getenv "HOME")) t))
+
+(defvar nonk/home
+  (if nonk/windows-p (concat "C:/Users/" (user-login-name) "/") "~/")
+  "Should be used instead of `~' in filenames for portability.")
+
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load-file custom-file)
 
@@ -18,61 +24,56 @@
 
 (defvar package-list nil)
 (setq package-list
-  '( ;; Theme.
-     modus-themes
+      '(;; Theme.
+	modus-themes
 
-     ;; Cool libraries.
-     dash
-     ag
+	;; Cool libraries.
+	dash
+	ag
 
-     ;; Customization.
-     diminish
+	;; Customization.
+	diminish
 
-     ;; Mandatory fluff.
-     vertico
-     marginalia
-     embark
-     consult
-     embark-consult
-     cape
-     savehist
-     orderless
+	;; Mandatory fluff.
+	vertico
+	marginalia
+	embark
+	consult
+	embark-consult
+	cape
+	savehist
+	orderless
 
-     ;; LSP support.
-     flycheck
-     lsp-mode
-     lsp-ui
-     company
-     projectile
-     yasnippet
+	;; LSP support.
+	flycheck
+	lsp-mode
+	lsp-ui
+	company
+	projectile
+	yasnippet
+	ccls
 
-     ;; Utilities.
-     ace-window
-     aggressive-indent-mode
-     format-all
-     editorconfig
-     wakatime-mode
+	;; Utilities.
+	ace-window
+	aggressive-indent-mode
+	format-all
+	editorconfig
+	wakatime-mode
 
-     ;; It's Magit!
-     magit
+	;; It's Magit!
+	magit
 
-     ;; Various modes.
-     rust-mode
-     zig-mode
-     jinja2-mode
-     markdown-mode
-     cmake-mode
-     dockerfile-mode
-     yaml-mode))
+	;; Various modes.
+	rust-mode
+	zig-mode
+	jinja2-mode
+	markdown-mode
+	cmake-mode
+	dockerfile-mode
+	yaml-mode))
 
 (dolist (package package-list)
   (straight-use-package package))
-
-(straight-use-package
-  '(cmake-utils :type git :host github :repo "nonk123/emacs-cmake-utils"))
-
-(require 'cmake-utils)
-(setq cmake-utils-jobs-count 24)
 
 (require 'dash)
 
@@ -89,15 +90,22 @@
 (defun nonk/apply-theming (&optional force)
   (interactive "p")
   (when (or force (not nonk/theme-set-p))
-    (set-face-font 'default "LiterationMono Nerd Font Mono:spacing=100:pixelsize=12")
-    (load-theme 'modus-vivendi t nil)
-    (setq nonk/theme-set-p t)))
+    ;; Another dumb Windows vs Linux difference...
+    (let ((font-name (if nonk/windows-p "LiterationMono Nerd Font Mono"
+		       "LiterationMono Nerd Font")))
+      (set-face-font 'default (concat font-name ":spacing=100:pixelsize=12"))
+      (load-theme 'modus-vivendi t nil)
+      (setq nonk/theme-set-p t))))
 
 (add-hook 'after-init-hook #'nonk/disable-clutter)
 
 ;; Ensure the correct theme is set even in server mode.
-(add-hook 'server-after-make-frame-hook #'nonk/apply-theming)
-(add-hook 'after-make-frame-hook #'nonk/apply-theming)
+(if server-mode
+    (progn
+      (add-hook 'server-after-make-frame-hook #'nonk/apply-theming)
+      (add-hook 'after-make-frame-hook #'nonk/apply-theming))
+  ;; Run immediately if running in a GUI client.
+  (nonk/apply-theming))
 
 (setq eldoc-documentation-strategy #'eldoc-documentation-compose)
 (global-eldoc-mode 1)
@@ -118,7 +126,8 @@
 (setq prefix-help-command #'embark-prefix-help-command)
 (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
 
-(bind-keys ("C-." . embark-act) ("M-." . xref-find-definitions))
+(bind-keys ("C-." . embark-act)
+	   ("M-." . xref-find-definitions))
 
 (defvar consult-remap-alist nil)
 (setq consult-remap-alist
@@ -127,11 +136,10 @@
 (pcase-dolist (`(,orig . ,new) consult-remap-alist)
   (bind-key (vector 'remap orig) new))
 
-(bind-keys
-  ("C-z" . consult-line)
-	("C-c i" . consult-imenu-multi)
-	("C-y" . consult-yank-from-kill-ring)
-	("M-y" . yank))
+(bind-keys ("C-z" . consult-line)
+	   ("C-c i" . consult-imenu-multi)
+	   ("C-y" . consult-yank-from-kill-ring)
+	   ("M-y" . yank))
 
 (setq ispell-alternate-dictionary "/usr/share/dict/words")
 
@@ -143,12 +151,16 @@
 
 (add-to-list 'auto-mode-alist '("LICENSE\\'" . text-mode))
 
+(bind-keys :map flycheck-mode-map
+	   ("C-c C-n" . flycheck-next-error)
+	   ("C-c C-p" . flycheck-previous-error))
+
 (global-flycheck-mode 1)
 
 (setq projectile-auto-discover t)
 (setq projectile-file-exists-remote-cache-expire nil)
-(setq projectile-indexing-method 'hybrid)
-(setq projectile-project-search-path '(("~/Sources" . 1)))
+(setq projectile-indexing-method (if nonk/windows-p 'hybrid 'alien))
+(setq projectile-project-search-path `((,(concat nonk/home "Sources") . 1)))
 
 (projectile-global-mode 1)
 
@@ -221,6 +233,7 @@
           (setq stop t)))
       (setq ptr (cdr ptr))))
   (unless (-any-p #'derived-mode-p nonk/ignore-lsp-modes)
+    (require 'ccls)
     (lsp nil)
     (lsp-ui-mode 1)))
 
@@ -242,7 +255,7 @@
 	  #'nonk/start-coding))
 
 (bind-keys ("M-o" . ace-window)
-	([remap other-window] . ace-window))
+	   ([remap other-window] . ace-window))
 
 (setq vc-follow-symlinks t)
 
@@ -256,6 +269,9 @@
 
 (global-wakatime-mode 1)
 (editorconfig-mode 1)
+
+(bind-keys ("M-n" . scroll-up-line)
+	   ("M-p" . scroll-down-line))
 
 (defun nonk/diminish-things ()
   (diminish 'eldoc-mode)
