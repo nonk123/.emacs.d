@@ -56,6 +56,14 @@
 	yasnippet
 	ccls
 
+	;; Treemacs
+	treemacs
+	lsp-treemacs
+	treemacs-projectile
+
+	;; Fun stuff.
+	treemacs-icons-dired
+
 	;; Utilities.
 	ace-window
 	aggressive-indent-mode
@@ -196,6 +204,50 @@
 
 (require 'ccls)
 
+(require 'treemacs)
+(require 'lsp-treemacs)
+(require 'treemacs-projectile)
+
+(treemacs-icons-dired-mode 1)
+
+(require 'ace-window)
+
+(defun nonk/treemacs-toggle-sidebar (&optional arg)
+  "Toggle the treemacs sidebar.
+
+Toggle if ARG is nil; enable if ARG is a positive number; disable otherwise."
+  (interactive (list nil))
+  (let* ((was-visible (eq (treemacs-current-visibility) 'visible))
+	 (did-exist (or was-visible (eq (treemacs-current-visibility) 'exists))))
+    (cond
+     ((not arg) (nonk/treemacs-toggle-sidebar (if was-visible 0 1)))
+     ((> arg 0)
+      (unless did-exist
+	(treemacs--init (projectile-project-root) (projectile-project-name)))
+      (treemacs--popup-window)
+      (select-window (get-mru-window)))
+     (t
+      (if (eq (treemacs-current-visibility) 'visible)
+	  (treemacs--select-visible-window)
+	(treemacs--select-not-visible-window))
+      (treemacs-quit)))))
+
+(defun nonk/treemacs-toggle-focus (&optional arg)
+  "Toggle the treemacs sidebar focus.
+
+Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
+  (interactive (list nil))
+  (if (or (and arg (> 0 arg))
+	  (not (eq (treemacs-current-visibility) 'visible)))
+      (nonk/treemacs-toggle-sidebar 1)
+    (if (treemacs-is-treemacs-window-selected?)
+ 	(other-window 1)
+      (treemacs--select-visible-window))))
+
+;; TODO: borked.
+;; (bind-keys ("C-c t" . nonk/treemacs-toggle-focus)
+;;            ("C-c C-t" . nonk/treemacs-toggle-sidebar))
+
 (require 'aggressive-indent)
 (defvar nonk/aggressive-indent-modes '(lisp-data-mode))
 (defvar nonk/ignore-lsp-modes '(sh-mode ld-script-mode lisp-data-mode))
@@ -234,6 +286,8 @@
           (add-hook hook fn 99 t)
           (setq stop t)))
       (setq ptr (cdr ptr))))
+  ;; TODO: unbork.
+  ;; (nonk/treemacs-toggle-sidebar 1)
   (unless (-any-p #'derived-mode-p nonk/ignore-lsp-modes)
     (lsp nil)
     (lsp-ui-mode 1)))
@@ -263,7 +317,7 @@
 (defun nonk/magit-here ()
   (interactive)
   (if-let ((root (projectile-project-root)))
-    (magit-status root)
+      (magit-status root)
     (user-error "You're not inside a project yet")))
 
 (bind-keys ("C-c g" . nonk/magit-here))
