@@ -55,6 +55,7 @@
 	projectile
 	yasnippet
 	ccls
+	dap-mode
 
 	;; Treemacs
 	treemacs
@@ -75,13 +76,15 @@
 	magit
 
 	;; Various modes.
+	web-mode
 	rust-mode
 	zig-mode
 	jinja2-mode
 	markdown-mode
 	cmake-mode
 	dockerfile-mode
-	yaml-mode))
+	yaml-mode
+	glsl-mode))
 
 (dolist (package package-list)
   (straight-use-package package))
@@ -127,7 +130,7 @@
 (electric-pair-mode 1)
 (electric-indent-mode 1)
 
-(setq completion-styles '(orderless partial-completion basic))
+(setq completion-styles '(partial-completion basic orderless))
 (setq completion-category-defaults nil)
 
 (marginalia-mode 1)
@@ -296,12 +299,21 @@ Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
   (interactive)
   (remove-hook 'before-save-hook #'nonk/format-buffer t))
 
+(require 'web-mode)
 (require 'lsp-mode)
 (require 'lsp-ui)
 
+(add-to-list 'auto-mode-alist '("\\.cshtml\\(?:\\..+\\)?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.cshtml\\.cs\\'" . csharp-mode))
+
+(add-to-list 'lsp-language-id-configuration '("\\.cshtml\\.cs\\'" . "csharp"))
+
+(setq web-mode-engines-alist '(("razor" . "\\.cshtml\\(?:\\..+\\)?\\'")))
+
 (setq lsp-headerline-breadcrumb-enable nil
-  lsp-ui-peek-enable nil
-  lsp-ui-sideline-enable nil)
+      lsp-ui-peek-enable nil
+      lsp-ui-sideline-enable nil
+      lsp-signature-auto-activate '(:on-trigger-char :after-completion))
 
 (bind-key "C-c l" lsp-command-map)
 
