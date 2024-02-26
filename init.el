@@ -57,13 +57,19 @@
 	ccls
 	dap-mode
 
+	;; It's Magit!
+	magit
+
 	;; Treemacs
 	treemacs
 	lsp-treemacs
 	treemacs-projectile
+	treemacs-magit
 
 	;; Fun stuff.
 	treemacs-icons-dired
+	all-the-icons
+	treemacs-all-the-icons
 
 	;; Utilities.
 	ace-window
@@ -71,9 +77,6 @@
 	format-all
 	editorconfig
 	wakatime-mode
-
-	;; It's Magit!
-	magit
 
 	;; Various modes.
 	web-mode
@@ -91,6 +94,11 @@
 
 (require 'dash)
 
+(when (display-graphic-p)
+  (require 'all-the-icons)
+  (require 'treemacs-all-the-icons)
+  (treemacs-load-theme "all-the-icons"))
+
 (setq wdired-allow-to-change-permissions t)
 
 (defun nonk/disable-clutter ()
@@ -98,6 +106,13 @@
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1))
+
+(defvar nonk/left-fringe 18)
+(fringe-mode (cons nonk/left-fringe 0))
+
+(defun nonk/window-disable-fringes (&optional window)
+  (interactive)
+  (set-window-fringes (or window (selected-window)) 0 0 0 t))
 
 (defvar nonk/theme-set nil)
 
@@ -210,8 +225,21 @@
 (require 'treemacs)
 (require 'lsp-treemacs)
 (require 'treemacs-projectile)
+(require 'treemacs-magit)
 
 (treemacs-icons-dired-mode 1)
+(treemacs-follow-mode -1)
+(treemacs-git-mode 'deferred)
+
+(setq treemacs-is-never-other-window t)
+(add-hook 'treemacs-mode-hook #'nonk/window-disable-fringes)
+
+(defun nonk/minibuffer-disable-fringes (&optional frame)
+  (interactive)
+  (nonk/window-disable-fringes (minibuffer-window frame)))
+
+(add-hook 'emacs-startup-hook #'nonk/minibuffer-disable-fringes)
+(add-hook 'after-make-frame-functions #'nonk/minibuffer-disable-fringes)
 
 (require 'ace-window)
 
@@ -219,37 +247,44 @@
   "Toggle the treemacs sidebar.
 
 Toggle if ARG is nil; enable if ARG is a positive number; disable otherwise."
-  (interactive (list nil))
+  (interactive)
   (let* ((was-visible (eq (treemacs-current-visibility) 'visible))
 	 (did-exist (or was-visible (eq (treemacs-current-visibility) 'exists))))
     (cond
-     ((not arg) (nonk/treemacs-toggle-sidebar (if was-visible 0 1)))
-     ((> arg 0)
-      (unless did-exist
-	(treemacs--init (projectile-project-root) (projectile-project-name)))
-      (treemacs--popup-window)
-      (select-window (get-mru-window)))
-     (t
-      (if (eq (treemacs-current-visibility) 'visible)
-	  (treemacs--select-visible-window)
-	(treemacs--select-not-visible-window))
-      (treemacs-quit)))))
+     ((not arg)
+      (if did-exist
+	  (with-current-buffer (treemacs-get-local-buffer)
+  	    (kill-buffer))
+	(treemacs--init (projectile-project-root)
+ 			(projectile-project-name))
+	(nonk/treemacs-toggle-focus -1)))
+     ((and arg (> arg 0) (not was-visible))
+      (nonk/treemacs-toggle-sidebar))
+     ((and arg (not did-exist))
+      (nonk/treemacs-toggle-sidebar)))))
 
 (defun nonk/treemacs-toggle-focus (&optional arg)
   "Toggle the treemacs sidebar focus.
 
 Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
-  (interactive (list nil))
-  (if (or (and arg (> 0 arg))
-	  (not (eq (treemacs-current-visibility) 'visible)))
-      (nonk/treemacs-toggle-sidebar 1)
-    (if (treemacs-is-treemacs-window-selected?)
- 	(other-window 1)
-      (treemacs--select-visible-window))))
+  (interactive)
+  (let ((was-visible (eq (treemacs-current-visibility) 'visible)))
+    (cond
+     ((not arg)
+      (if (not was-visible)
+	  (progn
+	    (nonk/treemacs-toggle-sidebar 1)
+	    (treemacs--select-visible-window))
+	(if (treemacs-is-treemacs-window-selected?)
+	    (select-window (get-mru-window))
+	  (treemacs--select-visible-window))))
+     ((and arg (> arg 0) (not was-visible))
+      (nonk/treemacs-toggle-focus))
+     (was-visible
+      (nonk/treemacs-toggle-focus)))))
 
-;; TODO: borked.
-;; (bind-keys ("C-c t" . nonk/treemacs-toggle-focus)
-;;            ("C-c C-t" . nonk/treemacs-toggle-sidebar))
+(bind-keys ("C-c t" . nonk/treemacs-toggle-focus)
+           ("C-c C-t" . nonk/treemacs-toggle-sidebar))
 
 (require 'aggressive-indent)
 (defvar nonk/aggressive-indent-modes '(lisp-data-mode))
@@ -264,13 +299,13 @@ Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
   (let ((fallback t))
     (when lsp-mode
       (when (or (lsp-feature? "textDocument/formatting")
-              (lsp-feature? "textDocument/rangeFormatting"))
+		(lsp-feature? "textDocument/rangeFormatting"))
         (lsp-format-buffer)
         (setq fallback nil)))
     (when fallback
       ;; Ignore the error to prevent quirks while saving the buffer.
       (condition-case nil
-        (format-all-buffer)
+          (format-all-buffer)
         (error nil)))))
 
 (defvar nonk/mode-extras nil)
@@ -289,8 +324,6 @@ Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
           (add-hook hook fn 99 t)
           (setq stop t)))
       (setq ptr (cdr ptr))))
-  ;; TODO: unbork.
-  ;; (nonk/treemacs-toggle-sidebar 1)
   (unless (-any-p #'derived-mode-p nonk/ignore-lsp-modes)
     (lsp nil)
     (lsp-ui-mode 1)))
@@ -319,7 +352,7 @@ Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
 
 (dolist (mode '(prog-mode markdown-mode cmake-mode))
   (add-hook (intern (concat (symbol-name mode) "-hook"))
-	  #'nonk/start-coding))
+	    #'nonk/start-coding))
 
 (bind-keys ("M-o" . ace-window)
 	   ([remap other-window] . ace-window))
