@@ -65,6 +65,7 @@
     format-all
     editorconfig
     wakatime-mode
+    cargo
 
     ;; Various modes.
     web-mode
