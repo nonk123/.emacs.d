@@ -355,7 +355,9 @@ Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
 	    #'nonk/start-coding))
 
 (bind-keys ("M-o" . ace-window)
-	   ([remap other-window] . ace-window))
+	   ("C-x \"" . split-window-below)
+	   ("C-x %" . split-window-right)
+	   ("C-x M-o" . window-swap-states))
 
 (setq vc-follow-symlinks t)
 
@@ -372,6 +374,8 @@ Toggle if ARG is nil; focus if ARG is a positive number; unfocus otherwise."
 
 (bind-keys ("M-n" . scroll-up-line)
 	   ("M-p" . scroll-down-line))
+
+(bind-keys ("C-c m" . man-follow))
 
 (defun nonk/diminish-things ()
   (diminish 'eldoc-mode)
