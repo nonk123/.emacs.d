@@ -28,7 +28,7 @@
 (defvar package-list nil)
 (setq package-list
       '(;; Theme.
-	modus-themes
+	dracula-theme
 
 	;; Cool libraries.
 	dash
@@ -99,17 +99,17 @@
   (menu-bar-mode -1)
   (scroll-bar-mode -1))
 
-(defvar nonk/theme-set-p nil)
+(defvar nonk/theme-set nil)
 
 (defun nonk/apply-theming (&optional force)
   (interactive "p")
-  (when (or force (not nonk/theme-set-p))
+  (when (or force (not nonk/theme-set))
     ;; Another dumb Windows vs Linux difference...
     (let ((font-name (if nonk/windows-p "LiterationMono Nerd Font Mono"
 		       "LiterationMono Nerd Font")))
-      (set-face-font 'default (concat font-name ":spacing=100:pixelsize=12"))
-      (load-theme 'modus-vivendi t nil)
-      (setq nonk/theme-set-p t))))
+      (set-face-font 'default (concat font-name ":spacing=100:pixelsize=12")))
+    (load-theme 'dracula t nil)
+    (setq nonk/theme-set t)))
 
 (add-hook 'after-init-hook #'nonk/disable-clutter)
 
