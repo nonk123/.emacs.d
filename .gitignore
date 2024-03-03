@@ -7,4 +7,8 @@
 !early-init.el
 !init.el
 
+!elisp
+!elisp/*.el
+
 !snippets
+!snippets/**/*.yas

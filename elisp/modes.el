@@ -1,0 +1,43 @@
+(defconst nonk/left-fringe 18)
+
+(require 'wakatime-mode)
+(require 'editorconfig)
+(require 'marginalia)
+(require 'vertico)
+(require 'savehist)
+(require 'yasnippet)
+(require 'flycheck)
+(require 'company)
+(require 'projectile)
+(require 'web-mode)
+
+(add-to-list 'auto-mode-alist '("LICENSE\\'" . text-mode))
+(add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cshtml\\(?:\\..+\\)?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.cshtml\\.cs\\'" . csharp-mode))
+
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+(fringe-mode (cons nonk/left-fringe 0))
+
+(global-eldoc-mode 1)
+
+(line-number-mode 1)
+(column-number-mode 1)
+
+(electric-pair-mode 1)
+(electric-indent-mode 1)
+
+(marginalia-mode 1)
+(vertico-mode 1)
+(savehist-mode 1)
+
+(yas-global-mode 1)
+(global-flycheck-mode 1)
+(projectile-mode 1)
+(global-company-mode 1)
+
+(global-wakatime-mode 1)
+(editorconfig-mode 1)
