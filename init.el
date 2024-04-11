@@ -14,7 +14,7 @@
 (defun nonk/load-init (&optional arg)
   "Byte-compile and load the init-file in parts called modules.
 
-If ARG is non-nil, recompile all modules."
+With a prefix argument ARG, recompile all modules."
   (interactive "P")
   (require 'bytecomp)
   (dolist (module nonk/module-order)
