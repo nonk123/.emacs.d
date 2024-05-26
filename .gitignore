@@ -2,7 +2,7 @@
 !.gitignore
 
 !README.md
-!LICENSE
+!UNLICENSE
 
 !early-init.el
 !init.el
