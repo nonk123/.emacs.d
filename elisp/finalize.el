@@ -11,4 +11,8 @@
 
 (add-hook 'after-init-hook #'nonk/diminish-things)
 
+(unless (file-exists-p custom-file)
+  (with-temp-buffer
+    (write-file custom-file)))
+
 (load-file custom-file)

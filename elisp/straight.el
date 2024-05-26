@@ -80,5 +80,3 @@
 
 (dolist (package nonk/package-list)
   (straight-use-package package))
-
-(require 'dash)
