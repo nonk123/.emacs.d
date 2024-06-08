@@ -4,6 +4,12 @@
   (interactive)
   (comment-line 1))
 
+(defun nonk/find-file-sudo (filename)
+  (interactive "Fsudo find file: ")
+  (find-file (concat "/sudo::" filename)))
+
+(bind-keys ("C-x M-f" . nonk/find-file-sudo))
+
 (bind-keys ("M-*" . replace-regexp)
  	   ("C-;" . nonk/comment-whole-line))
 
