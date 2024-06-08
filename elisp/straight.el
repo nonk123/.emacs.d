@@ -34,6 +34,7 @@
     cape
     savehist
     orderless
+    eldoc-box
 
     ;; LSP support.
     flycheck

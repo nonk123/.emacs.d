@@ -3,6 +3,10 @@
 (require 'lsp-ui)
 (require 'web-mode)
 (require 'ccls)
+(require 'eldoc-box)
+
+(setq eldoc-box-lighter "")
+(eldoc-box-hover-at-point-mode 1)
 
 (defun nonk/format-buffer (&optional arg)
   (interactive "p")
