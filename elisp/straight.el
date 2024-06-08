@@ -16,7 +16,7 @@
 
 (defconst nonk/package-list
   '(;; Theme.
-    dracula-theme
+    doom-themes
 
     ;; Cool libraries.
     dash

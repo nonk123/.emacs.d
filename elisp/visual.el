@@ -16,7 +16,11 @@
 		       "LiterationMono Nerd Font")))
       (set-face-font 'default (concat font-name ":spacing=100:pixelsize=12")))
     (treemacs-load-theme "all-the-icons")
-    (load-theme 'dracula t nil)
+    (setq doom-themes-enable-bold t)
+    (setq doom-themes-enable-italic t)
+    (load-theme 'doom-dracula t nil)
+    (doom-themes-treemacs-config)
+    (doom-themes-org-config)
     (setq nonk/theme-set t)))
 
 (defun nonk/minibuffer-disable-fringes (&optional frame)
