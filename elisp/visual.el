@@ -12,7 +12,8 @@
   (interactive "P")
   (when (and (or force (not nonk/theme-set)))
     ;; Another dumb Windows vs Linux difference...
-    (let ((font-name (if nonk/windows-p "LiterationMono Nerd Font Mono"
+    (let ((font-name (if nonk/windows?
+			 "LiterationMono Nerd Font Mono"
 		       "LiterationMono Nerd Font")))
       (set-face-font 'default (concat font-name ":spacing=100:pixelsize=12")))
     (treemacs-load-theme "all-the-icons")

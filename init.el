@@ -1,9 +1,9 @@
 ;; -*- lexical-binding: t; -*-
 
-(defvar nonk/windows-p (and (string-match-p "AppData\\\\Roaming" (getenv "HOME")) t))
+(defvar nonk/windows? (and (string-match-p "AppData\\\\Roaming" (getenv "HOME")) t))
 
 (defvar nonk/home
-  (if nonk/windows-p (concat "C:/Users/" (user-login-name) "/") "~/")
+  (if nonk/windows? (concat "C:/Users/" (user-login-name) "/") "~/")
   "Should be used instead of `~' in filenames for portability.")
 
 (defconst nonk/module-order
