@@ -1,5 +1,6 @@
 (require 'projectile)
 (require 'magit)
+(require 'forge)
 
 (setq projectile-auto-discover t)
 (setq projectile-file-exists-remote-cache-expire nil)

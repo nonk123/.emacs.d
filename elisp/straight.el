@@ -48,6 +48,7 @@
 
     ;; It's Magit!
     magit
+    forge
 
     ;; Treemacs
     treemacs
