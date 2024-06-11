@@ -4,7 +4,7 @@
 (require 'embark)
 (require 'cape)
 
-(setq completion-styles '(flex partial-completion orderless))
+(setq completion-styles '(partial-completion basic orderless))
 (setq completion-category-defaults nil)
 
 (setq ispell-alternate-dictionary "/usr/share/dict/words")
