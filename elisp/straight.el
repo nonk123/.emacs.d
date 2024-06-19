@@ -21,6 +21,8 @@
     ;; Cool libraries.
     dash
     ag
+    ripgrep
+    rg
 
     ;; Customization.
     diminish
@@ -48,6 +50,7 @@
 
     ;; It's Magit!
     magit
+    magit-todos
     forge
 
     ;; Treemacs
