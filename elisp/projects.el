@@ -4,6 +4,7 @@
 (require 'forge)
 
 (magit-todos-mode 1)
+(setq magit-todos-depth 3)
 
 (setq projectile-auto-discover t)
 (setq projectile-file-exists-remote-cache-expire nil)
