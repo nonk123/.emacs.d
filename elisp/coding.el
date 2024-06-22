@@ -6,7 +6,6 @@
 (require 'eldoc-box)
 
 (setq eldoc-box-lighter "")
-(eldoc-box-hover-at-point-mode 1)
 
 (defun nonk/format-buffer (&optional arg)
   (interactive "p")
@@ -25,6 +24,7 @@
 (defun nonk/start-coding ()
   (interactive)
   (diminish 'auto-revert-mode) ; something re-enables it unless run inside a hook???
+  (eldoc-box-hover-at-point-mode 1)
   (when (-any-p #'derived-mode-p nonk/aggressive-indent-modes)
     (aggressive-indent-mode 1))
   (editorconfig-apply)
