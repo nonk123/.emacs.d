@@ -4,6 +4,7 @@
 (require 'web-mode)
 (require 'ccls)
 (require 'eldoc-box)
+(require 'ts-fold)
 
 (setq eldoc-box-lighter "")
 

@@ -37,6 +37,7 @@
     savehist
     orderless
     eldoc-box
+    (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold")
 
     ;; LSP support.
     flycheck
