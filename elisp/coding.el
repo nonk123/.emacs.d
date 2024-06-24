@@ -5,8 +5,15 @@
 (require 'ccls)
 (require 'eldoc-box)
 (require 'ts-fold)
+(require 'indent-bars)
+(require 'indent-bars-ts)
 
 (setq eldoc-box-lighter "")
+
+(setq indent-bars-treesit-support t)
+(setq indent-bars-starting-column 0)
+(setq indent-bars-treesit-ignore-blank-lines-types '("module"))
+(setq indent-bars-width-frac 0.12)
 
 (defun nonk/format-buffer (&optional arg)
   (interactive "p")
@@ -28,6 +35,7 @@
   (eldoc-box-hover-at-point-mode 1)
   (when (-any-p #'derived-mode-p nonk/aggressive-indent-modes)
     (aggressive-indent-mode 1))
+  (indent-bars-mode 1)
   (editorconfig-apply)
   (add-hook 'before-save-hook #'nonk/format-buffer 99 t)
   (let ((ptr nonk/mode-extras) (stop nil))
