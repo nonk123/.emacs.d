@@ -16,8 +16,6 @@
 (setq indent-bars-treesit-ignore-blank-lines-types '("module"))
 (setq indent-bars-width-frac 0.12)
 
-(diminish 'format-all-mode)
-
 (defun nonk/format-buffer--mode-specific ()
   (cond
    ((and lsp-mode (or (lsp-feature? "textDocument/formatting")
@@ -35,11 +33,11 @@
 
 (defun nonk/start-coding ()
   (interactive)
-  (diminish 'auto-revert-mode) ; something re-enables it unless run inside a hook???
   (eldoc-box-hover-at-point-mode 1)
   (when (-any-p #'derived-mode-p nonk/aggressive-indent-modes)
     (aggressive-indent-mode 1))
   (format-all-mode 1)
+  (diminish 'format-all-mode)
   (indent-bars-mode 1)
   (editorconfig-apply)
   (add-hook 'before-save-hook #'nonk/format-buffer 99 t)
@@ -57,7 +55,8 @@
       (cargo-minor-mode 1)))
   (unless (-any-p #'derived-mode-p nonk/ignore-lsp-modes)
     (lsp nil)
-    (lsp-ui-mode 1)))
+    (lsp-ui-mode 1))
+  (diminish 'auto-revert-mode))
 
 (defun nonk/disable-auto-format ()
   (interactive)
