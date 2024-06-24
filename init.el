@@ -24,4 +24,4 @@ With a prefix argument ARG, recompile all modules."
 	(byte-compile-file cur-file))
       (load-file compiled-file))))
 
-(nonk/load-init)
+(nonk/load-init t)
