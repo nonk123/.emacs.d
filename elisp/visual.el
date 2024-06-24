@@ -18,7 +18,6 @@
     ;; Another dumb Windows vs Linux difference...
     (let ((font-name (if nonk/windows? "LiterationMono Nerd Font Mono" "LiterationMono Nerd Font")))
       (set-face-font 'default (concat font-name ":spacing=100:pixelsize=12")))
-    (treemacs-load-theme "all-the-icons")
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
     (load-theme 'doom-dracula t nil)
