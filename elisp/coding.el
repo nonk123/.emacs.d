@@ -17,12 +17,9 @@
 
 (defun nonk/format-buffer--mode-specific ()
   (cond
-   ((and lsp-mode
-	 (or (lsp-feature? "textDocument/formatting")
-	     (lsp-feature? "textDocument/rangeFormatting")))
+   ((and lsp-mode (or (lsp-feature? "textDocument/formatting")
+		      (lsp-feature? "textDocument/rangeFormatting")))
     (lsp-format-buffer))
-   ((derived-mode-p 'emacs-lisp-mode)
-    (aggressive-indent-indent-region-and-on (point-min) (point-max)))
    (t
     (condition-case nil
 	(format-all-buffer)
@@ -39,7 +36,8 @@
   (eldoc-box-hover-at-point-mode 1)
   (when (-any-p #'derived-mode-p nonk/aggressive-indent-modes)
     (aggressive-indent-mode 1))
-  (when nonk/theme-set
+  (format-all-mode 1)
+  (when nonk/theme-set ; enabling `indent-bars-mode' crashes the initial frame during startup
     (indent-bars-mode 1))
   (editorconfig-apply)
   (add-hook 'before-save-hook #'nonk/format-buffer 99 t)
