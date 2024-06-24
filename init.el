@@ -3,7 +3,9 @@
 (defvar nonk/windows? (and (string-match-p "AppData\\\\Roaming" (getenv "HOME")) t))
 
 (defvar nonk/home
-  (if nonk/windows? (concat "C:/Users/" (user-login-name) "/") "~/")
+  (if nonk/windows?
+      (concat "C:/Users/" (user-login-name) "/")
+    (expand-file-name "~/"))
   "Should be used instead of `~' in filenames for portability.")
 
 (defconst nonk/module-order
