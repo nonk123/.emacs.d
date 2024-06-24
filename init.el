@@ -1,8 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
-(defvar nonk/windows? (and (string-match-p "AppData\\\\Roaming" (getenv "HOME")) t))
+(defconst nonk/windows? (and (string-match-p "AppData\\\\Roaming" (getenv "HOME")) t))
 
-(defvar nonk/home
+(defconst nonk/home
   (if nonk/windows?
       (concat "C:/Users/" (user-login-name) "/")
     (expand-file-name "~/"))
