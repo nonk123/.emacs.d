@@ -1,5 +1,6 @@
 (defconst nonk/left-fringe 18)
 
+(require 'diminish)
 (require 'wakatime-mode)
 (require 'editorconfig)
 (require 'marginalia)
@@ -15,6 +16,8 @@
 (add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cshtml\\(?:\\..+\\)?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.cshtml\\.cs\\'" . csharp-mode))
+
+(diminish 'smerge-mode)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)

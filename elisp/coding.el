@@ -1,3 +1,4 @@
+(require 'diminish)
 (require 'aggressive-indent)
 (require 'lsp-mode)
 (require 'lsp-ui)
@@ -14,6 +15,8 @@
 (setq indent-bars-starting-column 0)
 (setq indent-bars-treesit-ignore-blank-lines-types '("module"))
 (setq indent-bars-width-frac 0.12)
+
+(diminish 'format-all-mode)
 
 (defun nonk/format-buffer--mode-specific ()
   (cond
