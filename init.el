@@ -11,12 +11,16 @@
     "visual" "treemacs" "coding" "keys" "modes" "finalize")
   "The order in which init-file modules are loaded.  See `nonk/load-init'.")
 
+(require 'bytecomp)
+(require 'comp)
+
+(setq native-comp-async-report-warnings-errors 'silent)
+
 (defun nonk/load-init (&optional arg)
   "Byte-compile and load the init-file in parts called modules.
 
 With a prefix argument ARG, recompile all modules."
   (interactive "P")
-  (require 'bytecomp)
   (dolist (module nonk/module-order)
     (let* ((cur-file (expand-file-name (concat "elisp/" module ".el") user-emacs-directory))
 	   (compiled-file (byte-compile-dest-file cur-file)))
