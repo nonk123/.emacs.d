@@ -35,7 +35,8 @@
   (eldoc-box-hover-at-point-mode 1)
   (when (-any-p #'derived-mode-p nonk/aggressive-indent-modes)
     (aggressive-indent-mode 1))
-  (indent-bars-mode 1)
+  (when nonk/theme-set
+    (indent-bars-mode 1))
   (editorconfig-apply)
   (add-hook 'before-save-hook #'nonk/format-buffer 99 t)
   (let ((ptr nonk/mode-extras) (stop nil))
