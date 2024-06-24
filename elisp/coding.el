@@ -15,19 +15,23 @@
 (setq indent-bars-treesit-ignore-blank-lines-types '("module"))
 (setq indent-bars-width-frac 0.12)
 
-(defun nonk/format-buffer (&optional arg)
-  (interactive "p")
-  (let ((fallback t))
-    (when lsp-mode
-      (when (or (lsp-feature? "textDocument/formatting")
-		(lsp-feature? "textDocument/rangeFormatting"))
-        (lsp-format-buffer)
-        (setq fallback nil)))
-    (when fallback
-      ;; Ignore the error to prevent quirks while saving the buffer.
-      (condition-case nil
-          (format-all-buffer)
-        (error nil)))))
+(defun nonk/format-buffer--mode-specific ()
+  (cond
+   ((and lsp-mode
+	 (or (lsp-feature? "textDocument/formatting")
+	     (lsp-feature? "textDocument/rangeFormatting")))
+    (lsp-format-buffer))
+   ((derived-mode-p 'emacs-lisp-mode)
+    (aggressive-indent-indent-region-and-on (point-min) (point-max)))
+   (t
+    (condition-case nil
+	(format-all-buffer)
+      (error nil)))))
+
+(defun nonk/format-buffer ()
+  (interactive)
+  (nonk/format-buffer--mode-specific)
+  (whitespace-cleanup-region (point-min) (point-max)))
 
 (defun nonk/start-coding ()
   (interactive)
@@ -42,9 +46,9 @@
   (let ((ptr nonk/mode-extras) (stop nil))
     (while (and ptr (not stop))
       (pcase-let ((`(,mode ,hook ,fn) (car ptr)))
-        (when (derived-mode-p mode)
-          (add-hook hook fn 99 t)
-          (setq stop t)))
+	(when (derived-mode-p mode)
+	  (add-hook hook fn 99 t)
+	  (setq stop t)))
       (setq ptr (cdr ptr))))
   (when-let* ((buf-file (buffer-file-name))
 	      (buf-file (file-name-nondirectory buf-file)))
