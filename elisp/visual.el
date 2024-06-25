@@ -15,8 +15,7 @@
 (defun nonk/apply-theming (&optional force)
   (interactive "P")
   (when (and (or force (not nonk/theme-set)))
-    ;; Another dumb Windows vs Linux difference...
-    (let ((font-name (if nonk/windows? "LiterationMono Nerd Font Mono" "LiterationMono Nerd Font")))
+    (let ((font-name "Monaspace Neon"))
       (set-face-font 'default (concat font-name "-9")))
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
