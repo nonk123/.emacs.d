@@ -20,7 +20,7 @@
       (set-face-font 'default (concat font-name "-9")))
     (setq doom-themes-enable-bold t)
     (setq doom-themes-enable-italic t)
-    (load-theme 'doom-one t nil)
+    (load-theme 'doom-dark+ t nil)
     (doom-themes-treemacs-config)
     (doom-themes-org-config)
     (nonk/minibuffer-disable-fringes)
