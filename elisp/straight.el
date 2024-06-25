@@ -82,6 +82,7 @@
     markdown-mode
     cmake-mode
     dockerfile-mode
+    groovy-mode ; only used for Jenkinsfiles
     yaml-mode
     glsl-mode))
 
