@@ -9,6 +9,8 @@
 (require 'indent-bars)
 (require 'indent-bars-ts)
 
+(add-to-list 'lsp-language-id-configuration '(makefile-gmake-mode . "makefile") t)
+
 (setq eldoc-box-lighter "")
 
 (setq indent-bars-treesit-support t)
