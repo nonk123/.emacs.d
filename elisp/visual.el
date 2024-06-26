@@ -1,8 +1,13 @@
 (require 'treemacs)
 (require 'all-the-icons)
 (require 'treemacs-all-the-icons)
+(require 'elcord)
 
 (defvar nonk/theme-set nil)
+
+(setq elcord--editor-name "GNU/Emacs")
+(setq elcord-idle-message "Jacking it, perhaps?")
+(setq elcord-display-elapsed nil)
 
 (defun nonk/window-disable-fringes (&optional window)
   (interactive)
@@ -29,7 +34,8 @@
 
 (defun nonk/apply-server-theming (&optional frame)
   (when (display-graphic-p frame)
-    (nonk/apply-theming t)))
+    (nonk/apply-theming t)
+    (elcord-mode 1)))
 
 ;; Ensure the correct theme is set even in server mode.
 (add-hook 'server-after-make-frame-hook #'nonk/apply-server-theming)

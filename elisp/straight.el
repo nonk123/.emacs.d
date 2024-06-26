@@ -65,6 +65,7 @@
     treemacs-icons-dired
     all-the-icons
     treemacs-all-the-icons
+    elcord
 
     ;; Utilities.
     ace-window
