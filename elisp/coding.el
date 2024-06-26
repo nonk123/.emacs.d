@@ -15,8 +15,9 @@
 
 (setq indent-bars-treesit-support t)
 (setq indent-bars-starting-column 0)
+(setq indent-bars-prefer-character t)
+(setq indent-bars-no-stipple-char ?|)
 (setq indent-bars-treesit-ignore-blank-lines-types '("module"))
-(setq indent-bars-width-frac 0.12)
 
 (defun nonk/format-buffer--mode-specific ()
   (cond
