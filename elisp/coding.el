@@ -75,10 +75,6 @@
       lsp-ui-sideline-enable nil
       lsp-signature-auto-activate '(:on-trigger-char :after-completion))
 
-;; Performance tweaks for `lsp-mode'.
-(setq gc-cons-threshold 100000000
-      read-process-output-max (* 2 1024 1024))
-
 (bind-key "C-c l" lsp-command-map)
 
 (dolist (mode '(prog-mode markdown-mode cmake-mode))
