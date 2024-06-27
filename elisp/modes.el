@@ -24,6 +24,7 @@
 (scroll-bar-mode -1)
 
 (fringe-mode (cons nonk/left-fringe 0))
+(setq auto-hscroll-mode 'curent-line)
 
 (global-eldoc-mode 1)
 
