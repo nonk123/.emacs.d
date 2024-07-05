@@ -43,8 +43,6 @@
   (eldoc-box-hover-at-point-mode 1)
   (when (-any-p #'derived-mode-p nonk/aggressive-indent-modes)
     (aggressive-indent-mode 1))
-  (format-all-mode 1)
-  (diminish 'format-all-mode)
   (indent-bars-mode 1)
   (editorconfig-apply)
   (unless (apply #'derived-mode-p nonk/ignore-autoformat-modes)
