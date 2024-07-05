@@ -8,6 +8,10 @@
 (require 'ts-fold)
 (require 'indent-bars)
 (require 'indent-bars-ts)
+(require 'yasnippet)
+(require 'yasnippet-snippets)
+
+(yasnippet-snippets-initialize)
 
 (add-to-list 'lsp-language-id-configuration '(makefile-gmake-mode . "makefile") t)
 

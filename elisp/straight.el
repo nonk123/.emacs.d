@@ -47,6 +47,7 @@
     company
     projectile
     yasnippet
+    yasnippet-snippets
     ccls
     dap-mode
 
