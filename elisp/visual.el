@@ -18,11 +18,21 @@
 (setq centaur-tabs-set-bar 'under)
 (setq x-underline-at-descent-line t)
 (setq centaur-tabs-set-close-button nil)
+(setq centaur-tabs-show-new-tab-button nil)
 (setq centaur-tabs-set-modified-marker t)
 
 (centaur-tabs-mode 1)
-(add-hook 'dired-mode-hook #'centaur-tabs-local-mode)
-(add-hook 'magit-mode-hook #'centaur-tabs-local-mode)
+
+(setq centaur-tabs-adjust-buffer-order 'left)
+(centaur-tabs-enable-buffer-reordering)
+
+(defun nonk/kill-tabs ()
+  (interactive)
+  (centaur-tabs-local-mode -1))
+
+(add-hook 'dired-mode-hook #'nonk/kill-tabs)
+(add-hook 'magit-mode-hook #'nonk/kill-tabs)
+(add-hook 'help-mode-hook #'nonk/kill-tabs)
 
 (bind-keys ("M-n" . centaur-tabs-forward)
 	   ("M-p" . centaur-tabs-backward))

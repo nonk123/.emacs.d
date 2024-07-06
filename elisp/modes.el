@@ -12,6 +12,7 @@
 (require 'projectile)
 (require 'web-mode)
 (require 'eldoc-box)
+(require 'centaur-tabs)
 
 (add-to-list 'auto-mode-alist '("LICENSE\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
@@ -35,7 +36,8 @@
 	 (buffer (window-buffer window)))
     (with-current-buffer buffer
       (display-line-numbers-mode -1)
-      (hl-line-mode -1))
+      (hl-line-mode -1)
+      (nonk/kill-tabs))
     frame))
 (advice-add #'eldoc-box--get-frame :around #'nonk/eldoc-box--disable-line-numbers)
 (global-display-line-numbers-mode 1)
