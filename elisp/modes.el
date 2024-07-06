@@ -11,6 +11,7 @@
 (require 'company)
 (require 'projectile)
 (require 'web-mode)
+(require 'eldoc-box)
 
 (add-to-list 'auto-mode-alist '("LICENSE\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
@@ -28,8 +29,17 @@
 
 (global-eldoc-mode 1)
 
-(global-hl-line-mode 1)
+(defun nonk/eldoc-box--disable-line-numbers (orig-fun buffer)
+  (let* ((frame (funcall orig-fun buffer))
+	 (window (frame-root-window frame))
+	 (buffer (window-buffer window)))
+    (with-current-buffer buffer
+      (display-line-numbers-mode -1))
+    frame))
+(advice-add #'eldoc-box--get-frame :around #'nonk/eldoc-box--disable-line-numbers)
 (global-display-line-numbers-mode 1)
+
+(global-hl-line-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)
 
