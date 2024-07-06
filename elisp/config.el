@@ -14,7 +14,7 @@
 (setq wdired-allow-to-change-permissions t)
 
 (setq enable-recursive-minibuffers t)
-(setq visible-bell t)
+(setq visible-bell nil)
 (setq x-stretch-cursor t)
 
 (setq kill-whole-line t)

@@ -2,12 +2,30 @@
 (require 'all-the-icons)
 (require 'treemacs-all-the-icons)
 (require 'elcord)
+(require 'centaur-tabs)
 
 (defvar nonk/theme-set nil)
 
 (setq elcord--editor-name "GNU/Emacs")
 (setq elcord-idle-message "Jacking it, perhaps?")
 (setq elcord-display-elapsed nil)
+
+(setq centaur-tabs-style "box")
+(setq centaur-tabs-height 32)
+(setq centaur-tabs-set-icons t)
+(setq centaur-tabs-icon-type 'all-the-icons)
+(setq centaur-tabs-gray-out-icons 'buffer)
+(setq centaur-tabs-set-bar 'under)
+(setq x-underline-at-descent-line t)
+(setq centaur-tabs-set-close-button nil)
+(setq centaur-tabs-set-modified-marker t)
+
+(centaur-tabs-mode 1)
+(add-hook 'dired-mode-hook #'centaur-tabs-local-mode)
+(add-hook 'magit-mode-hook #'centaur-tabs-local-mode)
+
+(bind-keys ("M-n" . centaur-tabs-forward)
+	   ("M-p" . centaur-tabs-backward))
 
 (defun nonk/window-disable-fringes (&optional window)
   (interactive)
