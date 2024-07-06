@@ -10,6 +10,7 @@
 (require 'indent-bars-ts)
 (require 'yasnippet)
 (require 'yasnippet-snippets)
+(require 'zig-mode)
 
 (yasnippet-snippets-initialize)
 
@@ -47,6 +48,7 @@
   (editorconfig-apply)
   (unless (apply #'derived-mode-p nonk/ignore-autoformat-modes)
     (add-hook 'before-save-hook #'nonk/format-buffer 99 t))
+  (zig-format-on-save-mode -1) ; interferes with my setup
   (let ((ptr nonk/mode-extras) (stop nil))
     (while (and ptr (not stop))
       (pcase-let ((`(,mode ,hook ,fn) (car ptr)))
