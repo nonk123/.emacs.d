@@ -87,7 +87,8 @@
     dockerfile-mode
     groovy-mode ; only used for Jenkinsfiles
     yaml-mode
-    glsl-mode))
+    glsl-mode
+    sxhkdrc-mode))
 
 (dolist (package nonk/package-list)
   (straight-use-package package))
