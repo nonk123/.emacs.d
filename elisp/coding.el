@@ -24,6 +24,9 @@
 (setq indent-bars-no-stipple-char ?|)
 (setq indent-bars-treesit-ignore-blank-lines-types '("module"))
 
+(require 'lsp-groovy)
+(setq lsp-groovy-server-file (unless nonk/windows? "/usr/share/java/groovy-language-server/groovy-language-server-all.jar"))
+
 (defun nonk/format-buffer--mode-specific ()
   (cond
    ((and lsp-mode (or (lsp-feature? "textDocument/formatting")
