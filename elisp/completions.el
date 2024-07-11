@@ -3,9 +3,10 @@
 (require 'consult)
 (require 'embark)
 (require 'cape)
+(require 'orderless)
 
-(setq completion-styles '(partial-completion basic orderless))
-(setq completion-category-defaults nil)
+(setq completion-styles '(orderless basic))
+(setq completion-category-overrides '((file (styles basic partial-completion))))
 
 (setq ispell-alternate-dictionary "/usr/share/dict/words")
 
