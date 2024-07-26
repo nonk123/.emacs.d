@@ -15,7 +15,7 @@
 (setq centaur-tabs-style "box")
 (setq centaur-tabs-height 32)
 (setq centaur-tabs-set-icons t)
-(setq centaur-tabs-icon-type 'all-the-icons)
+(setq centaur-tabs-icon-type 'nerd-icons)
 (setq centaur-tabs-gray-out-icons 'buffer)
 (setq centaur-tabs-set-bar 'under)
 (setq x-underline-at-descent-line t)
@@ -27,19 +27,20 @@
 (setq doom-modeline-bar-width 4)
 (setq doom-modeline-window-width-limit 320)
 
-(centaur-tabs-mode 1)
 (doom-modeline-mode 1)
+(centaur-tabs-mode 1)
 
 (setq centaur-tabs-adjust-buffer-order 'left)
 (centaur-tabs-enable-buffer-reordering)
 
-(defun nonk/kill-tabs ()
+(defvar nonk/centaur-tabs-project-timer (run-at-time 5 3 #'nonk/centaur-tabs-project-only))
+(defun nonk/centaur-tabs-project-only ()
   (interactive)
-  (centaur-tabs-local-mode -1))
-
-(add-hook 'dired-mode-hook #'nonk/kill-tabs)
-(add-hook 'magit-mode-hook #'nonk/kill-tabs)
-(add-hook 'help-mode-hook #'nonk/kill-tabs)
+  (when-let* ((buf (window-buffer))
+	      ((buffer-file-name buf))
+	      (proj (project-current nil)))
+    (with-current-buffer buf
+      (centaur-tabs-local-mode (if proj -1 1)))))
 
 (bind-keys ("M-n" . centaur-tabs-forward)
 	   ("M-p" . centaur-tabs-backward))
