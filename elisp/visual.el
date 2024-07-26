@@ -3,6 +3,8 @@
 (require 'treemacs-all-the-icons)
 (require 'elcord)
 (require 'centaur-tabs)
+(require 'doom-modeline)
+(require 'nerd-icons)
 
 (defvar nonk/theme-set nil)
 
@@ -21,7 +23,12 @@
 (setq centaur-tabs-show-new-tab-button nil)
 (setq centaur-tabs-set-modified-marker t)
 
+(setq doom-modeline-height 22)
+(setq doom-modeline-bar-width 4)
+(setq doom-modeline-window-width-limit 320)
+
 (centaur-tabs-mode 1)
+(doom-modeline-mode 1)
 
 (setq centaur-tabs-adjust-buffer-order 'left)
 (centaur-tabs-enable-buffer-reordering)

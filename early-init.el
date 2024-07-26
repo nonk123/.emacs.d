@@ -1,4 +1,5 @@
 (setq inhibit-splash-screen t)
+(setq doom-modeline-support-imenu t) ; weird shiz
 
 ;; Enforce `straight' usage.
 (setq package-enable-at-startup nil)

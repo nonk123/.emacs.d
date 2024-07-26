@@ -8,6 +8,8 @@
 
 ;; Misc. configuration that doesn't fit anywhere:
 
+(setq find-file-visit-truename t)
+
 (setq user-full-name "Sergey Sudakov")
 (setq user-mail-address "me@nonk.dev")
 
@@ -21,3 +23,5 @@
 (setq backward-delete-char-untabify-method 'hungry)
 
 (setq sentence-end-double-space nil)
+
+(setq inhibit-compacting-font-caches t)
