@@ -13,6 +13,7 @@
 (require 'web-mode)
 (require 'eldoc-box)
 (require 'centaur-tabs)
+(require 'hl-todo)
 
 (add-to-list 'auto-mode-alist '("LICENSE\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
@@ -43,6 +44,7 @@
 (global-display-line-numbers-mode 1)
 
 (global-hl-line-mode 1)
+(global-hl-todo-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)
 
