@@ -8,8 +8,6 @@
 (setq completion-styles '(orderless basic))
 (setq completion-category-overrides '((file (styles basic partial-completion))))
 
-(setq ispell-alternate-dictionary "/usr/share/dict/words")
-
 (setq company-backends nil)
 (setq company-frontends nil)
 
@@ -19,7 +17,6 @@
   (cape-wrap-nonexclusive orig))
 (advice-add #'elisp-completion-at-point :around #'nonk/wrap-elisp-capf)
 
-(setq yas-fallback-behavior 'return-nil)
 (setq yas-snippet-dirs (list (expand-file-name "snippets" user-emacs-directory)))
 
 (bind-keys :map yas-minor-mode-map ("<tab>" . nil) ("TAB" . nil))
