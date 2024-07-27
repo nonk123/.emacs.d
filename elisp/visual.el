@@ -18,7 +18,6 @@
 (setq centaur-tabs-icon-type 'nerd-icons)
 (setq centaur-tabs-gray-out-icons 'buffer)
 (setq centaur-tabs-set-bar 'under)
-(setq x-underline-at-descent-line t)
 (setq centaur-tabs-set-close-button nil)
 (setq centaur-tabs-show-new-tab-button nil)
 (setq centaur-tabs-set-modified-marker t)

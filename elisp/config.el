@@ -18,6 +18,7 @@
 (setq enable-recursive-minibuffers t)
 (setq visible-bell nil)
 (setq x-stretch-cursor t)
+(setq x-underline-at-descent-line t)
 
 (setq kill-whole-line t)
 (setq backward-delete-char-untabify-method 'hungry)
