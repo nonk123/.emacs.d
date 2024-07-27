@@ -8,6 +8,9 @@
 
 (defvar nonk/theme-set nil)
 
+(defvar nonk/hide-tabs-list
+  '("COMMIT_EDITMSG"))
+
 (setq elcord--editor-name "GNU/Emacs")
 (setq elcord-idle-message "Jacking it, perhaps?")
 (setq elcord-display-elapsed nil)
@@ -44,8 +47,9 @@
   (setq buffer (or buffer (window-buffer)))
   (with-current-buffer buffer
     (centaur-tabs-local-mode
-     (if-let* (((buffer-file-name buffer))
-	       (proj (project-current nil)))
+     (if (and (not (member (buffer-name buffer) nonk/hide-tabs-list))
+	      (buffer-file-name buffer)
+	      (project-current nil))
 	 -1 1))))
 
 (bind-keys ("M-n" . centaur-tabs-forward)
