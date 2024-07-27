@@ -23,6 +23,7 @@
     ag
     ripgrep
     rg
+    polymode
 
     ;; Customization.
     diminish
@@ -90,7 +91,8 @@
     groovy-mode ; only used for Jenkinsfiles
     yaml-mode
     glsl-mode
-    sxhkdrc-mode))
+    sxhkdrc-mode
+    poly-markdown))
 
 (dolist (package nonk/package-list)
   (straight-use-package package))

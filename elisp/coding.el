@@ -86,6 +86,6 @@
 
 (bind-key "C-c l" lsp-command-map)
 
-(dolist (mode '(prog-mode markdown-mode cmake-mode))
+(dolist (mode '(prog-mode markdown-mode poly-markdown-mode cmake-mode))
   (add-hook (intern (concat (symbol-name mode) "-hook"))
 	    #'nonk/start-coding))
