@@ -33,13 +33,20 @@
 (centaur-tabs-enable-buffer-reordering)
 
 (defvar nonk/centaur-tabs-project-timer (run-at-time 5 3 #'nonk/centaur-tabs-project-only))
-(defun nonk/centaur-tabs-project-only ()
-  (interactive)
-  (when-let* ((buf (window-buffer))
-	      ((buffer-file-name buf))
-	      (proj (project-current nil)))
-    (with-current-buffer buf
-      (centaur-tabs-local-mode (if proj -1 1)))))
+(add-hook 'window-buffer-change-functions #'nonk/centaur-tabs-project-only--wbcf 100)
+
+(defun nonk/centaur-tabs-project-only--wbcf (frame)
+  (dolist (window (window-list frame 'never nil))
+    (nonk/centaur-tabs-project-only (window-buffer window))))
+
+(defun nonk/centaur-tabs-project-only (&optional buffer)
+  (interactive "i")
+  (setq buffer (or buffer (window-buffer)))
+  (with-current-buffer buffer
+    (centaur-tabs-local-mode
+     (if-let* (((buffer-file-name buffer))
+	       (proj (project-current nil)))
+	 -1 1))))
 
 (bind-keys ("M-n" . centaur-tabs-forward)
 	   ("M-p" . centaur-tabs-backward))

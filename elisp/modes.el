@@ -37,8 +37,7 @@
 	 (buffer (window-buffer window)))
     (with-current-buffer buffer
       (display-line-numbers-mode -1)
-      (hl-line-mode -1)
-      (nonk/kill-tabs))
+      (hl-line-mode -1))
     frame))
 (advice-add #'eldoc-box--get-frame :around #'nonk/eldoc-box--disable-line-numbers)
 (global-display-line-numbers-mode 1)
