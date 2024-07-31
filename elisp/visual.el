@@ -52,7 +52,8 @@
 	      (project-current nil))
 	 -1 1))))
 
-(bind-keys ("M-n" . centaur-tabs-forward)
+(bind-keys :map centaur-tabs-mode-map
+	   ("M-n" . centaur-tabs-forward)
 	   ("M-p" . centaur-tabs-backward))
 
 (defun nonk/window-disable-fringes (&optional window)
