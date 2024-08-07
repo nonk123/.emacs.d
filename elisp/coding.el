@@ -14,6 +14,7 @@
 (require 'zig-mode)
 
 (yasnippet-snippets-initialize)
+(global-tree-sitter-mode 1)
 
 (add-to-list 'lsp-language-id-configuration '(makefile-gmake-mode . "makefile") t)
 
