@@ -12,6 +12,8 @@
 (require 'yasnippet)
 (require 'yasnippet-snippets)
 (require 'zig-mode)
+(require 'web-mode)
+(require 'go-mode)
 
 (yasnippet-snippets-initialize)
 (global-tree-sitter-mode 1)

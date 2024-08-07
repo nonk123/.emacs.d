@@ -6,7 +6,7 @@
 (require 'orderless)
 
 (setq completion-styles '(orderless basic))
-(setq completion-category-overrides '((file (styles basic partial-completion))))
+;;(setq completion-category-overrides '((file (styles basic partial-completion))))
 
 (setq company-backends nil)
 (setq company-frontends nil)
