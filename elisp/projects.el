@@ -11,7 +11,9 @@
 (setq projectile-indexing-method (if nonk/windows? 'hybrid 'alien))
 (setq projectile-project-search-path `((,(concat nonk/home "Sources") . 1)))
 
-(bind-key "C-c p" projectile-command-map)
+(bind-keys ("C-c p" . projectile-command-map)
+	   ([remap projectile-find-file] . project-find-file)
+	   ([remap projectile-switch-project] . project-switch-project))
 
 (setq vc-follow-symlinks t)
 
