@@ -5,6 +5,7 @@
 (require 'centaur-tabs)
 (require 'doom-modeline)
 (require 'nerd-icons)
+(require 'nerd-icons-completion)
 
 (defvar nonk/theme-set nil)
 
@@ -31,6 +32,9 @@
 
 (doom-modeline-mode 1)
 (centaur-tabs-mode 1)
+
+(nerd-icons-completion-mode 1)
+(add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
 
 (setq centaur-tabs-adjust-buffer-order 'left)
 (centaur-tabs-enable-buffer-reordering)

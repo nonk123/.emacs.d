@@ -69,6 +69,7 @@
     treemacs-icons-dired
     all-the-icons
     nerd-icons
+    nerd-icons-completion
     treemacs-all-the-icons
     elcord
 
