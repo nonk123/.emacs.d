@@ -49,6 +49,7 @@
 (advice-add #'eldoc-box--get-frame :around #'nonk/eldoc-box--disable-line-numbers)
 (global-display-line-numbers-mode 1)
 
+(blink-cursor-mode -1)
 (global-hl-line-mode 1)
 (global-hl-todo-mode 1)
 (line-number-mode 1)
