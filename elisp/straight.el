@@ -57,8 +57,9 @@
 
     ;; It's Magit!
     magit
-    magit-todos
     forge
+    magit-todos
+    git-gutter
 
     ;; Treemacs
     treemacs

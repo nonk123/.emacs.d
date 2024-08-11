@@ -6,11 +6,14 @@
 (require 'doom-modeline)
 (require 'nerd-icons)
 (require 'nerd-icons-completion)
+(require 'git-gutter)
 
 (defvar nonk/theme-set nil)
 
 (defvar nonk/hide-tabs-list
   '("COMMIT_EDITMSG"))
+
+(global-git-gutter-mode 1)
 
 (setq elcord--editor-name "GNU/Emacs")
 (setq elcord-idle-message "Jacking it, perhaps?")
