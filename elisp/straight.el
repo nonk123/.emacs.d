@@ -81,6 +81,7 @@
     format-all
     editorconfig
     wakatime-mode
+    dtrt-indent
     cargo
 
     ;; Various modes.

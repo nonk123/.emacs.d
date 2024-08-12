@@ -14,9 +14,11 @@
 (require 'zig-mode)
 (require 'web-mode)
 (require 'go-mode)
+(require 'dtrt-indent)
 
 (yasnippet-snippets-initialize)
 (global-tree-sitter-mode 1)
+(dtrt-indent-global-mode 1)
 
 (add-to-list 'lsp-language-id-configuration '(makefile-gmake-mode . "makefile") t)
 
@@ -34,11 +36,11 @@
 (defun nonk/format-buffer--mode-specific ()
   (cond
    ((and lsp-mode (or (lsp-feature? "textDocument/formatting")
-		      (lsp-feature? "textDocument/rangeFormatting")))
+                      (lsp-feature? "textDocument/rangeFormatting")))
     (lsp-format-buffer))
    (t
     (condition-case nil
-	(format-all-buffer)
+        (format-all-buffer)
       (error nil)))))
 
 (defun nonk/format-buffer ()
@@ -60,14 +62,14 @@
   (let ((ptr nonk/mode-extras) (stop nil))
     (while (and ptr (not stop))
       (pcase-let ((`(,mode ,hook ,fn) (car ptr)))
-	(when (derived-mode-p mode)
-	  (add-hook hook fn 99 t)
-	  (setq stop t)))
+        (when (derived-mode-p mode)
+          (add-hook hook fn 99 t)
+          (setq stop t)))
       (setq ptr (cdr ptr))))
   (when-let* ((buf-file (buffer-file-name))
-	      (buf-file (file-name-nondirectory buf-file)))
+              (buf-file (file-name-nondirectory buf-file)))
     (when (or (-any-p #'derived-mode-p '(rust-ts-mode rust-mode))
-	      (string-equal buf-file "Cargo.toml"))
+              (string-equal buf-file "Cargo.toml"))
       (cargo-minor-mode 1)))
   (unless (-any-p #'derived-mode-p nonk/ignore-lsp-modes)
     (lsp nil)
@@ -91,4 +93,4 @@
 
 (dolist (mode '(prog-mode markdown-mode poly-markdown-mode cmake-mode))
   (add-hook (intern (concat (symbol-name mode) "-hook"))
-	    #'nonk/start-coding))
+            #'nonk/start-coding))
