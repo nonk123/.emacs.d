@@ -6,9 +6,8 @@
 
 ;; Performance tweaks for `lsp-mode'.
 (setenv "LSP_USE_PLISTS" "true")
-(setq gc-cons-threshold (* 128 1024 1024))
-(setq gc-cons-percentage 0.2)
-(setq read-process-output-max (* 4 1024 1024))
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1 1024 1024))
 
 ;; Prevent `indent-bars-mode' initial-frame crashes.
 (setq initial-major-mode #'fundamental-mode)
