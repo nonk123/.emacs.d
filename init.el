@@ -18,16 +18,10 @@
 
 (setq native-comp-async-report-warnings-errors 'silent)
 
-(defun nonk/load-init (&optional arg)
-  "Byte-compile and load the init-file in parts called modules.
-
-With a prefix argument ARG, recompile all modules."
+(defun nonk/load-init ()
+  "Load the init-file in parts called modules."
   (interactive "P")
   (dolist (module nonk/module-order)
-    (let* ((cur-file (expand-file-name (concat "elisp/" module ".el") user-emacs-directory))
-	   (compiled-file (byte-compile-dest-file cur-file)))
-      (when (or arg (not (file-readable-p compiled-file)))
-	(byte-compile-file cur-file))
-      (load-file compiled-file))))
+    (load-file (expand-file-name (concat "elisp/" module ".el") user-emacs-directory))))
 
-(nonk/load-init t)
+(nonk/load-init)
