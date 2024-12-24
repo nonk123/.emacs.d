@@ -1,4 +1,3 @@
-(require 'flyspell)
 (require 'diminish)
 (require 'aggressive-indent)
 (require 'lsp-mode)
@@ -15,10 +14,12 @@
 (require 'web-mode)
 (require 'go-mode)
 (require 'dtrt-indent)
+(require 'jinx)
 
 (yasnippet-snippets-initialize)
 (global-tree-sitter-mode 1)
 (dtrt-indent-global-mode 1)
+(global-jinx-mode 1)
 
 (add-to-list 'lsp-language-id-configuration '(makefile-gmake-mode . "makefile") t)
 
@@ -53,7 +54,6 @@
   (eldoc-box-hover-at-point-mode 1)
   (when (-any-p #'derived-mode-p nonk/aggressive-indent-modes)
     (aggressive-indent-mode 1))
-  (flyspell-prog-mode)
   (indent-bars-mode 1)
   (editorconfig-apply)
   (unless (apply #'derived-mode-p nonk/ignore-autoformat-modes)

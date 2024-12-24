@@ -1,6 +1,5 @@
 (defconst nonk/left-fringe 18)
 
-(require 'flyspell)
 (require 'diminish)
 (require 'wakatime-mode)
 (require 'editorconfig)
@@ -16,9 +15,6 @@
 (require 'hl-todo)
 (require 'polymode)
 (require 'poly-markdown)
-
-(defun nonk/enable-flyspell () (interactive) (flyspell-mode 1))
-(add-hook 'text-mode-hook #'nonk/enable-flyspell 100)
 
 (add-to-list 'auto-mode-alist '("\\.md\\'" . poly-markdown-mode))
 (add-to-list 'auto-mode-alist '("LICENSE\\'" . text-mode))

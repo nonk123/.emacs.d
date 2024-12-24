@@ -74,6 +74,7 @@
     elcord
 
     ;; Utilities.
+    jinx
     ace-window
     aggressive-indent-mode
     format-all
