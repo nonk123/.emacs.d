@@ -1,10 +1,12 @@
 (require 'ace-window)
 
 (defun nonk/comment-whole-line ()
+  "Comment the entire current line."
   (interactive)
   (comment-line 1))
 
 (defun nonk/find-file-sudo (filename)
+  "Find FILENAME prepending the sudo protocol to it."
   (interactive "Fsudo find file: ")
   (find-file (concat "/sudo::" filename)))
 
