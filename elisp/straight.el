@@ -41,8 +41,6 @@
     eldoc-box
     (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold")
     (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
-    centaur-tabs
-    doom-modeline
 
     ;; LSP support.
     flycheck

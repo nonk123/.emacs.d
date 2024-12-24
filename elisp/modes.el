@@ -13,7 +13,6 @@
 (require 'projectile)
 (require 'web-mode)
 (require 'eldoc-box)
-(require 'centaur-tabs)
 (require 'hl-todo)
 (require 'polymode)
 (require 'poly-markdown)
