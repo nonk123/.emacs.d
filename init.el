@@ -76,6 +76,16 @@
   :init (lsp-ui-mode 1)
   :custom (lsp-headerline--enable-breadcrumb nil))
 
+(use-package indent-bars
+  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :hook (lsp-mode . indent-bars-mode)
+  :custom
+  (indent-bars-treesit-support t)
+  (indent-bars-starting-column 0)
+  (indent-bars-prefer-character t)
+  (indent-bars-no-stipple-char ?|)
+  (indent-bars-treesit-ignore-blank-lines-types '("module")))
+
 (use-package eldoc
   :diminish
   :init (global-eldoc-mode 1))
