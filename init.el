@@ -73,7 +73,8 @@
 
 (use-package lsp-ui
   :diminish
-  :init (lsp-ui-mode 1))
+  :init (lsp-ui-mode 1)
+  :custom (lsp-headerline--enable-breadcrumb nil))
 
 (use-package eldoc
   :diminish
