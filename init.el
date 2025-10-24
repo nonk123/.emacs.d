@@ -97,6 +97,7 @@
 
 (use-package emacs
   :diminish abbrev-mode auto-revert-mode
+  :hook (after-save . nonk/format-on-save)
   :bind ("C-'" . completion-at-point)
   :custom
   (context-menu-mode t)
@@ -104,3 +105,9 @@
   (read-extended-command-predicate #'command-completion-default-include-p)
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt)))
+
+(defun nonk/format-on-save ()
+  (interactive)
+  (when lsp-mode
+    (ignore-error lsp-capability-not-supported
+      (lsp-format-buffer))))
