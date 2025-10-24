@@ -135,7 +135,10 @@
 
 (use-package emacs
   :hook (after-save . nonk/format-on-save)
-  :bind ("C-'" . completion-at-point)
+  :bind
+  ("C-'" . completion-at-point)
+  ("M-n" . scroll-up-line)
+  ("M-p" . scroll-down-line)
   :custom
   (user-full-name "Sergey Sudakov")
   (user-mail-address "me@nonk.dev")
