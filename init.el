@@ -95,7 +95,7 @@
 
 (use-package lsp-mode
   :custom (lsp-keymap-prefix "C-c l")
-  :hook ((c-mode c++-mode) . lsp))
+  :hook ((c-mode c++-mode rust-mode) . lsp))
 
 (use-package lsp-ui
   :diminish
@@ -115,6 +115,8 @@
 (use-package ef-themes
   :custom (modus-themes-italic-constructs t)
   :init (load-theme 'ef-autumn t))
+
+(use-package rust-mode)
 
 (use-package eldoc :diminish
   :init (global-eldoc-mode 1))
