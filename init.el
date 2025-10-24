@@ -26,7 +26,6 @@
 (global-display-line-numbers-mode 1)
 
 (delete-selection-mode 1)
-(electric-indent-mode 1)
 
 ;; Thanks <https://justine.lol/sectorlisp2>.
 (unless standard-display-table
