@@ -75,7 +75,7 @@
 (use-package lsp-ui
   :diminish
   :init (lsp-ui-mode 1)
-  :custom (lsp-headerline--enable-breadcrumb nil))
+  :custom (lsp-headerline-breadcrumb-enable nil))
 
 (use-package indent-bars
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
