@@ -30,6 +30,22 @@
 (electric-indent-mode 1)
 (electric-pair-mode 1)
 
+;; Thanks <https://justine.lol/sectorlisp2>.
+(unless standard-display-table
+  (setq standard-display-table (make-display-table)))
+(aset standard-display-table #x2028 [?↵]) ;; LINE SEPARATOR
+(aset standard-display-table #x2029 [?¶]) ;; PARAGRAPH SEPARATOR
+(aset standard-display-table #x202A [?⟫]) ;; LEFT-TO-RIGHT EMBEDDING
+(aset standard-display-table #x202B [?⟪]) ;; RIGHT-TO-LEFT EMBEDDING
+(aset standard-display-table #x202D [?❯]) ;; LEFT-TO-RIGHT OVERRIDE
+(aset standard-display-table #x202E [?❮]) ;; RIGHT-TO-LEFT OVERRIDE
+(aset standard-display-table #x2066 [?⟩]) ;; LEFT-TO-RIGHT ISOLATE
+(aset standard-display-table #x2067 [?⟨]) ;; RIGHT-TO-LEFT ISOLATE
+(aset standard-display-table #x2068 [?⧽]) ;; FIRST STRONG ISOLATE
+(aset standard-display-table #x202C [?⇮]) ;; POP DIRECTIONAL FORMATTING
+(aset standard-display-table #x2069 [?⇯]) ;; POP DIRECTIONAL ISOLATE
+(aset standard-display-table 9 [?» ?  ?  ?  ?  ?  ?  ? ]) ;; tabs...
+
 (use-package editorconfig
   :diminish
   :init (editorconfig-mode 1))
@@ -79,7 +95,7 @@
 
 (use-package indent-bars
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
-  :hook (lsp-mode . indent-bars-mode)
+  ;:hook (lsp-mode . indent-bars-mode)
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-starting-column 0)
