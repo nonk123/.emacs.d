@@ -65,8 +65,8 @@
 (use-package flycheck
   :init (global-flycheck-mode 1)
   :bind (:map flycheck-mode-map
-	      ("C-c C-n" . flycheck-next-error)
-	      ("C-c C-p" . flycheck-previous-error)))
+              ("C-c C-n" . flycheck-next-error)
+              ("C-c C-p" . flycheck-previous-error)))
 
 (use-package lsp-mode
   :custom (lsp-keymap-prefix "C-c l")
