@@ -115,12 +115,13 @@
   :custom (modus-themes-italic-constructs t)
   :init (load-theme 'ef-autumn t))
 
-(use-package eldoc
-  :diminish
+(use-package eldoc :diminish
   :init (global-eldoc-mode 1))
 
+(use-package autorevert
+  :diminish auto-revert-mode)
+
 (use-package emacs
-  :diminish abbrev-mode auto-revert-mode
   :hook (after-save . nonk/format-on-save)
   :bind ("C-'" . completion-at-point)
   :custom
