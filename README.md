@@ -2,4 +2,4 @@
 
 My GNU/Emacs configuration. Moved from my [dotfiles repo](https://github.com/nonk123/dotfiles) due to increasing bloat.
 
-Should work on Windows 10 (theoretically) given you have the required software installed.
+Works on Windows 10, given you have the required software installed. Tested on a morgue computer at `$dayjob`.
