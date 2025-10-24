@@ -49,6 +49,7 @@
   :bind
   ([remap forward-sexp] . sp-forward-sexp)
   ([remap backward-sexp] . sp-backward-sexp)
+  ([remap transpose-sexp] . sp-transpose-sexp)
   :init
   (require 'smartparens-config)
   (smartparens-global-mode 1)
