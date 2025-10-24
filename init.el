@@ -24,6 +24,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (global-display-line-numbers-mode 1)
+(column-number-mode 1)
 
 (delete-selection-mode 1)
 
