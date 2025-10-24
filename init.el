@@ -69,7 +69,7 @@
 
 (use-package lsp-mode
   :custom (lsp-keymap-prefix "C-c l")
-  :hook ((prog-mode) . lsp))
+  :hook ((c-mode c++-mode) . lsp))
 
 (use-package lsp-ui
   :diminish
