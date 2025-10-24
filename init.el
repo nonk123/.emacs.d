@@ -104,8 +104,9 @@
   :custom (lsp-headerline-breadcrumb-enable nil))
 
 (use-package indent-bars
+  :disabled
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
-  ;:hook (lsp-mode . indent-bars-mode)
+  :hook (lsp-mode . indent-bars-mode)
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-starting-column 0)
