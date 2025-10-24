@@ -52,7 +52,8 @@
   :init (vertico-mode 1))
 
 (use-package consult
-  :custom (completion-in-region-function #'consult-completion-in-region))
+  :custom (completion-in-region-function #'consult-completion-in-region)
+  :bind ("M-y" . consult-yank-pop))
 
 (use-package marginalia
   :init (marginalia-mode 1))
