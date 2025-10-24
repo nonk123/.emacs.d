@@ -86,6 +86,10 @@
   (indent-bars-no-stipple-char ?|)
   (indent-bars-treesit-ignore-blank-lines-types '("module")))
 
+(use-package ef-themes
+  :custom (modus-themes-italic-constructs t)
+  :init (load-theme 'ef-autumn t))
+
 (use-package eldoc
   :diminish
   :init (global-eldoc-mode 1))
