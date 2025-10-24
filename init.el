@@ -137,6 +137,8 @@
   :hook (after-save . nonk/format-on-save)
   :bind ("C-'" . completion-at-point)
   :custom
+  (user-full-name "Sergey Sudakov")
+  (user-mail-address "me@nonk.dev")
   (auto-save-interval 0)
   (make-backup-files nil)
   (context-menu-mode t)
@@ -150,3 +152,17 @@
   (when lsp-mode
     (ignore-error lsp-capability-not-supported
       (lsp-format-buffer))))
+
+(use-package gnus
+  :preface (setq self-hosted-email-addrs '("me@nonk.dev"))
+  :custom
+  (gnus-select-method '(nnnil nil))
+  (gnus-secondary-select-methods
+   (mapcar (lambda (addr)
+             `(nnimap "mx.q7x.ru"
+                      (nnimap-user ,addr)
+                      (nnimap-server-port "imaps")
+                      (nnimap-stream tls)
+                      (nnir-search-engine imap)
+                      (nnmail-expiry-wait 'immediate)))
+           self-hosted-email-addrs)))
