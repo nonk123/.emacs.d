@@ -12,3 +12,7 @@
 ;; Prevent `indent-bars-mode' initial-frame crashes.
 (setq initial-major-mode #'fundamental-mode)
 (setq initial-scratch-message "")
+
+;; Thanks <https://stackoverflow.com/a/79042584>.
+(when initial-window-system
+  (add-to-list 'default-frame-alist '(font . "Consolas-9")))
