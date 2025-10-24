@@ -100,6 +100,8 @@
   :hook (after-save . nonk/format-on-save)
   :bind ("C-'" . completion-at-point)
   :custom
+  (auto-save-interval 0)
+  (make-backup-files nil)
   (context-menu-mode t)
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
