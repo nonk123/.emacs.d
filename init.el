@@ -164,8 +164,8 @@
    (mapcar (lambda (addr)
              `(nnimap "mx.q7x.ru"
                       (nnimap-user ,addr)
-                      (nnimap-server-port "imaps")
+                      (nnimap-server-port imaps)
                       (nnimap-stream tls)
                       (nnir-search-engine imap)
-                      (nnmail-expiry-wait 'immediate)))
+                      (nnmail-expiry-wait immediate)))
            self-hosted-email-addrs)))
