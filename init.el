@@ -27,6 +27,7 @@
 (column-number-mode 1)
 
 (delete-selection-mode 1)
+(setq kill-whole-line t)
 
 ;; Thanks <https://justine.lol/sectorlisp2>.
 (unless standard-display-table
@@ -123,6 +124,9 @@
 
 (use-package autorevert
   :diminish auto-revert-mode)
+
+(use-package wdired
+  :custom (wdired-allow-to-change-permissions t))
 
 (use-package emacs
   :hook (after-save . nonk/format-on-save)
