@@ -114,6 +114,10 @@
   (indent-bars-no-stipple-char ?|)
   (indent-bars-treesit-ignore-blank-lines-types '("module")))
 
+(use-package dtrt-indent
+  :diminish
+  :init (dtrt-indent-global-mode 1))
+
 (use-package ef-themes
   :custom (modus-themes-italic-constructs t)
   :init (load-theme 'ef-autumn t))
