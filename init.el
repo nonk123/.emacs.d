@@ -43,7 +43,6 @@
 (aset standard-display-table #x2068 [?⧽]) ;; FIRST STRONG ISOLATE
 (aset standard-display-table #x202C [?⇮]) ;; POP DIRECTIONAL FORMATTING
 (aset standard-display-table #x2069 [?⇯]) ;; POP DIRECTIONAL ISOLATE
-(aset standard-display-table 9 [?» ?  ?  ?  ?  ?  ?  ? ]) ;; tabs...
 
 (use-package smartparens
   :diminish
