@@ -94,13 +94,10 @@
               ("C-c C-p" . flycheck-previous-error)))
 
 (use-package lsp-mode
-  :custom (lsp-keymap-prefix "C-c l")
+  :custom
+  (lsp-keymap-prefix "C-c l")
+  (lsp-headerline-breadcrumb-enable nil)
   :hook ((c-mode c++-mode rust-mode) . lsp))
-
-(use-package lsp-ui
-  :diminish
-  :init (lsp-ui-mode 1)
-  :custom (lsp-headerline-breadcrumb-enable nil))
 
 (use-package indent-bars
   :disabled
