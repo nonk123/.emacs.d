@@ -93,6 +93,8 @@
               ("C-c C-n" . flycheck-next-error)
               ("C-c C-p" . flycheck-previous-error)))
 
+(use-package ag)
+
 (use-package lsp-mode
   :custom
   (lsp-keymap-prefix "C-c l")
