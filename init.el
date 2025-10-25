@@ -61,6 +61,12 @@
 (use-package magit
   :bind ("C-x g" . magit))
 
+(use-package diff-hl
+  :custom (global-diff-hl-mode 1)
+  :bind
+  ("C-c M-n" . diff-hl-next-hunk)
+  ("C-c M-p" . diff-hl-previous-hunk))
+
 (use-package projectile
   :diminish
   :custom
