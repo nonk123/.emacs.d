@@ -133,6 +133,12 @@
 (use-package wdired
   :custom (wdired-allow-to-change-permissions t))
 
+(defun nonk/format-on-save ()
+  (interactive)
+  (when lsp-mode
+    (ignore-error lsp-capability-not-supported
+      (lsp-format-buffer))))
+
 (use-package emacs
   :hook (after-save . nonk/format-on-save)
   :bind
@@ -150,12 +156,6 @@
   (read-extended-command-predicate #'command-completion-default-include-p)
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt)))
-
-(defun nonk/format-on-save ()
-  (interactive)
-  (when lsp-mode
-    (ignore-error lsp-capability-not-supported
-      (lsp-format-buffer))))
 
 (use-package gnus
   :preface (setq self-hosted-email-addrs '("me@nonk.dev"))
