@@ -142,6 +142,7 @@
   (user-mail-address "me@nonk.dev")
   (auto-save-interval 0)
   (make-backup-files nil)
+  (window-sides-vertical t)
   (context-menu-mode t)
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
