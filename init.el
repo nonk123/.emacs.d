@@ -165,3 +165,18 @@
                       (nnir-search-engine imap)
                       (nnmail-expiry-wait immediate)))
            self-hosted-email-addrs)))
+
+(use-package cmake-integration
+  :straight (cmake-integration :type git :host github :repo "darcamo/cmake-integration")
+  :custom
+  (cmake-integration-generator "Ninja")
+  (cmake-integration-use-separated-compilation-buffer-for-each-target t)
+  :init
+  (dolist (map '(c++-mode-map c-mode-map))
+    (bind-keys :map map
+               ([f3] . cmake-integration-select-current-target)
+               ([f4] . cmake-integration-transient)
+               ([f5] . cmake-integration-run-last-target)
+               ([f6] . cmake-integration-debug-last-target)
+               ([f9] . cmake-integration-save-and-compile-last-target)
+               ([f10] . cmake-integration-cmake-reconfigure))))
