@@ -168,11 +168,18 @@
                       (nnmail-expiry-wait immediate)))
            self-hosted-email-addrs)))
 
+(use-package dape
+  :custom
+  (dape-breakpoint-global-mode 1)
+  (dape-cwd-function #'projectile-project-root)
+  (dape-buffer-window-arrangement 'right))
+
 (use-package cmake-integration
   :straight (cmake-integration :type git :host github :repo "darcamo/cmake-integration")
   :custom
   (cmake-integration-generator "Ninja")
   (cmake-integration-use-separated-compilation-buffer-for-each-target t)
+  (cmake-integration-debug-launcher-function 'dape)
   :init
   ;; Thanks <https://github.com/darcamo/cmake-integration#example-keybindings>.
   (defvar cmake-project-mode-map (make-sparse-keymap))
