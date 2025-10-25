@@ -50,45 +50,46 @@
   ([remap forward-sexp] . sp-forward-sexp)
   ([remap backward-sexp] . sp-backward-sexp)
   ([remap transpose-sexp] . sp-transpose-sexp)
-  :init
-  (require 'smartparens-config)
+  :custom
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1))
 
 (use-package editorconfig
   :diminish
-  :init (editorconfig-mode 1))
+  :custom (editorconfig-mode 1))
 
 (use-package magit
   :bind ("C-x g" . magit))
 
 (use-package projectile
   :diminish
-  :init (projectile-mode 1)
   :custom
   (projectile-project-search-path '(("~/Sources" . 1)))
   (projectile-auto-cleanup-known-projects t)
+  (projectile-mode 1)
   :bind-keymap ("C-c p" . projectile-command-map))
 
 (use-package savehist
-  :init (savehist-mode 1))
+  :custom (savehist-mode 1))
 
 (use-package vertico
-  :custom (vertico-cycle t)
-  :init (vertico-mode 1))
+  :custom
+  (vertico-cycle t)
+  (vertico-mode 1))
 
 (use-package consult
   :custom (completion-in-region-function #'consult-completion-in-region)
   :bind ("M-y" . consult-yank-pop))
 
 (use-package marginalia
-  :init (marginalia-mode 1))
+  :custom (marginalia-mode 1))
 
 (use-package orderless
   :custom (completion-styles '(orderless basic)))
 
 (use-package flycheck
-  :init (global-flycheck-mode 1)
+  :defines flycheck-mode-map
+  :custom (global-flycheck-mode 1)
   :bind (:map flycheck-mode-map
               ("C-c C-n" . flycheck-next-error)
               ("C-c C-p" . flycheck-previous-error)))
@@ -114,7 +115,7 @@
 
 (use-package dtrt-indent
   :diminish
-  :init (dtrt-indent-global-mode 1))
+  :custom (dtrt-indent-global-mode 1))
 
 (use-package ef-themes
   :custom (modus-themes-italic-constructs t)
@@ -122,8 +123,9 @@
 
 (use-package rust-mode)
 
-(use-package eldoc :diminish
-  :init (global-eldoc-mode 1))
+(use-package eldoc
+  :diminish
+  :custom (global-eldoc-mode 1))
 
 (use-package autorevert
   :diminish auto-revert-mode)
