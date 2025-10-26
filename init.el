@@ -128,6 +128,7 @@
   :init (load-theme 'ef-autumn t))
 
 (use-package rust-mode)
+(use-package cmake-mode)
 
 (use-package eldoc
   :diminish
