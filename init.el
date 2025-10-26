@@ -129,6 +129,7 @@
 
 (use-package rust-mode)
 (use-package cmake-mode)
+(use-package yaml-mode)
 
 (use-package eldoc
   :diminish
