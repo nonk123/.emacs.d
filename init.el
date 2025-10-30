@@ -88,6 +88,8 @@ do that breaks a lot of external packages.")
   :custom
   (projectile-project-search-path `((,(expand-file-name "Sources" nonk/home) . 1)
                                     ("~" . 1)))
+  (projectile-enable-caching t)
+  (projectile-indexing-method 'alien)
   (projectile-auto-cleanup-known-projects t)
   (projectile-mode 1)
   :bind-keymap ("C-c p" . projectile-command-map))
