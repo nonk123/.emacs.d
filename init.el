@@ -162,7 +162,8 @@ do that breaks a lot of external packages.")
 
 (defun nonk/format-on-save ()
   (interactive)
-  (when lsp-mode
+  (when (bound-and-true-p lsp-mode)
+    (require 'lsp-mode)
     (ignore-error lsp-capability-not-supported
       (lsp-format-buffer))))
 
