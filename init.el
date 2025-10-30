@@ -126,6 +126,8 @@ do that breaks a lot of external packages.")
   :custom
   (lsp-keymap-prefix "C-c l")
   (lsp-headerline-breadcrumb-enable nil)
+  (lsp-completion-provider :none)
+  (lsp-eldoc-render-all t)
   :hook ((c-mode c++-mode rust-mode) . lsp))
 
 (use-package indent-bars
@@ -183,6 +185,7 @@ do that breaks a lot of external packages.")
   (context-menu-mode t)
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
+  (completion-auto-help nil)
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt)))
 
