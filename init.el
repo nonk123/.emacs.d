@@ -4,6 +4,18 @@
 
 ;;; Code:
 
+(defconst nonk/windose? (and (string-match-p "AppData\\\\Roaming" (getenv "HOME")) t)
+  "Evaluates to t if this GNU/Emacs is running under Windose.")
+
+(defconst nonk/home
+  (if nonk/windose? (concat "C:/Users/" (user-login-name) "/") (expand-file-name "~/"))
+  "Should be used instead of `~' in filenames for portability reasons.
+
+In GNU/Emacs for Windows, `~' expands to the user's `AppData/Roaming'
+directory.  I think it makes a lot more sense for it to expand to just
+the user's directory, but overwriting the `HOME' environment variable to
+do that breaks a lot of external packages.")
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -74,7 +86,8 @@
 (use-package projectile
   :diminish
   :custom
-  (projectile-project-search-path '(("~/Sources" . 1)))
+  (projectile-project-search-path `((,(expand-file-name "Sources" nonk/home) . 1)
+                                    ("~" . 1)))
   (projectile-auto-cleanup-known-projects t)
   (projectile-mode 1)
   :bind-keymap ("C-c p" . projectile-command-map))
