@@ -1,4 +1,8 @@
-;; -*- lexical-binding: t; -*-
+;; init.el --- nonk's GNU/Emacs config -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -216,3 +220,5 @@
              ([f6] . cmake-integration-debug-last-target)
              ([f9] . cmake-integration-save-and-compile-last-target)
              ([f10] . cmake-integration-cmake-reconfigure)))
+
+;;; init.el ends here
