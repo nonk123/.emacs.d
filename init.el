@@ -123,6 +123,9 @@ do that breaks a lot of external packages.")
 
 (use-package ag)
 
+(use-package yasnippet
+  :custom (yas-global-mode 1))
+
 (use-package lsp-mode
   :custom
   (lsp-keymap-prefix "C-c l")
