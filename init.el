@@ -186,6 +186,7 @@ do that breaks a lot of external packages.")
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
   (completion-auto-help nil)
+  (use-short-answers t)
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt)))
 
