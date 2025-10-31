@@ -138,6 +138,7 @@ do that breaks a lot of external packages.")
 (use-package ag)
 
 (use-package yasnippet
+  :diminish yas-minor-mode
   :custom (yas-global-mode 1))
 
 (use-package lsp-mode
