@@ -100,8 +100,8 @@ do that breaks a lot of external packages.")
 (use-package projectile
   :diminish
   :custom
-  (projectile-project-search-path `((,(expand-file-name "Sources" nonk/home) . 1)
-                                    ("~" . 1)))
+  (projectile-project-search-path
+   `((,(expand-file-name "Sources" nonk/home) . 1) ("~" . 1)))
   (projectile-enable-caching t)
   (projectile-indexing-method 'alien)
   (projectile-auto-cleanup-known-projects t)
