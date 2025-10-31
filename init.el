@@ -153,7 +153,9 @@ do that breaks a lot of external packages.")
 (use-package dockerfile-mode)
 (use-package rust-mode)
 (use-package cmake-mode)
-(use-package yaml-mode)
+
+(use-package yaml-mode
+  :hook ((yaml-mode yaml-ts-mode) . lsp))
 
 (use-package eldoc
   :diminish
