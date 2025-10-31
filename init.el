@@ -78,10 +78,21 @@ do that breaks a lot of external packages.")
   :bind ("C-x g" . magit))
 
 (use-package diff-hl
-  :custom (global-diff-hl-mode 1)
+  :after magit
+  :custom
+  (diff-hl-show-staged-changes nil)
+  (global-diff-hl-mode 1)
+  :functions diff-hl--update
+  :hook ((magit-post-commit magit-post-stage magit-post-unstage) . nonk/diff-hl-update-everywhere)
   :bind
   ("C-c M-n" . diff-hl-next-hunk)
-  ("C-c M-p" . diff-hl-previous-hunk))
+  ("C-c M-p" . diff-hl-previous-hunk)
+  :init
+  (defun nonk/diff-hl-update-everywhere ()
+    (interactive)
+    (dolist (wnd (window-list))
+      (with-current-buffer (window-buffer wnd)
+        (diff-hl--update)))))
 
 (use-package projectile
   :diminish
