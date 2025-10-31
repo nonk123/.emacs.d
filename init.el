@@ -32,8 +32,11 @@ do that breaks a lot of external packages.")
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(declare-function straight-use-package "init")
 (straight-use-package 'diminish)
 (straight-use-package 'use-package)
+
+(defvar straight-use-package-by-default)
 (setq straight-use-package-by-default t)
 
 (scroll-bar-mode -1)
@@ -143,7 +146,8 @@ do that breaks a lot of external packages.")
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-completion-provider :none)
   (lsp-eldoc-render-all t)
-  :hook ((c-mode c++-mode rust-mode) . lsp))
+  :hook ((c-mode c++-mode rust-mode) . lsp)
+  :functions lsp-format-buffer)
 
 (use-package indent-bars
   :disabled
@@ -182,6 +186,7 @@ do that breaks a lot of external packages.")
   :custom (wdired-allow-to-change-permissions t))
 
 (defun nonk/format-on-save ()
+  "Format the just saved file using the running language server."
   (interactive)
   (when (bound-and-true-p lsp-mode)
     (require 'lsp-mode)
