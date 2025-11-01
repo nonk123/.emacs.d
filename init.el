@@ -119,14 +119,13 @@ do that breaks a lot of external packages.")
   (vertico-mode 1))
 
 (use-package consult
-  :custom (completion-in-region-function #'consult-completion-in-region)
   :bind ("M-y" . consult-yank-pop))
 
 (use-package marginalia
   :custom (marginalia-mode 1))
 
 (use-package orderless
-  :custom (completion-styles '(orderless basic)))
+  :custom (completion-styles '(orderless basic partial-completion)))
 
 (use-package flycheck
   :defines flycheck-mode-map
@@ -140,6 +139,14 @@ do that breaks a lot of external packages.")
 (use-package yasnippet
   :diminish yas-minor-mode
   :custom (yas-global-mode 1))
+
+(use-package corfu
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-delay 0.3)
+  (global-corfu-mode 1)
+  (corfu-echo-mode 1))
 
 (use-package lsp-mode
   :custom
@@ -208,6 +215,7 @@ do that breaks a lot of external packages.")
       (lsp-format-buffer))))
 
 (use-package emacs
+  :diminish abbrev-mode
   :hook (after-save . nonk/format-on-save)
   :bind (("C-'" . completion-at-point)
          ("M-n" . scroll-up-line)
@@ -224,7 +232,8 @@ do that breaks a lot of external packages.")
   (completion-auto-help nil)
   (use-short-answers t)
   (minibuffer-prompt-properties
-   '(read-only t cursor-intangible t face minibuffer-prompt)))
+   '(read-only t cursor-intangible t face minibuffer-prompt))
+  (text-mode-ispell-word-completion nil))
 
 (use-package gnus
   :preface (setq self-hosted-email-addrs '("me@nonk.dev"))
