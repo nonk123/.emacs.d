@@ -65,10 +65,9 @@ do that breaks a lot of external packages.")
 
 (use-package smartparens
   :diminish
-  :bind
-  ([remap forward-sexp] . sp-forward-sexp)
-  ([remap backward-sexp] . sp-backward-sexp)
-  ([remap transpose-sexp] . sp-transpose-sexp)
+  :bind (([remap forward-sexp] . sp-forward-sexp)
+         ([remap backward-sexp] . sp-backward-sexp)
+         ([remap transpose-sexp] . sp-transpose-sexp))
   :custom
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1))
@@ -87,9 +86,8 @@ do that breaks a lot of external packages.")
   (global-diff-hl-mode 1)
   :functions diff-hl--update
   :hook ((magit-post-commit magit-post-stage magit-post-unstage) . nonk/diff-hl-update-everywhere)
-  :bind
-  ("C-c M-n" . diff-hl-next-hunk)
-  ("C-c M-p" . diff-hl-previous-hunk)
+  :bind (("C-c M-n" . diff-hl-next-hunk)
+         ("C-c M-p" . diff-hl-previous-hunk))
   :init
   (defun nonk/diff-hl-update-everywhere ()
     (interactive)
@@ -196,10 +194,9 @@ do that breaks a lot of external packages.")
 
 (use-package emacs
   :hook (after-save . nonk/format-on-save)
-  :bind
-  ("C-'" . completion-at-point)
-  ("M-n" . scroll-up-line)
-  ("M-p" . scroll-down-line)
+  :bind (("C-'" . completion-at-point)
+         ("M-n" . scroll-up-line)
+         ("M-p" . scroll-down-line))
   :custom
   (user-full-name "Sergey Sudakov")
   (user-mail-address "me@nonk.dev")
