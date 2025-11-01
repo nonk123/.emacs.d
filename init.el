@@ -1,4 +1,4 @@
-;; init.el --- nonk's GNU/Emacs config -*- lexical-binding: t; -*-
+;;; init.el --- nonk's GNU/Emacs config -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -16,28 +16,8 @@ directory.  I think it makes a lot more sense for it to expand to just
 the user's directory, but overwriting the `HOME' environment variable to
 do that breaks a lot of external packages.")
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(declare-function straight-use-package "init")
-(straight-use-package 'diminish)
-(straight-use-package 'use-package)
-
-(defvar straight-use-package-by-default)
-(setq straight-use-package-by-default t)
+(add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
+(load "bootstrap-straight")
 
 (scroll-bar-mode -1)
 (menu-bar-mode -1)

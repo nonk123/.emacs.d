@@ -1,10 +1,6 @@
 *
 !.gitignore
 
-# These two lines most likely do nothing, but it's nicer to be explicit.
-.\#*
-*~
-
 !README.md
 !UNLICENSE
 
