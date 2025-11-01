@@ -79,6 +79,8 @@ do that breaks a lot of external packages.")
 (use-package magit
   :bind ("C-x g" . magit))
 
+(use-package forge)
+
 (use-package diff-hl
   :after magit
   :custom
