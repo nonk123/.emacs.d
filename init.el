@@ -177,8 +177,8 @@ do that breaks a lot of external packages.")
 
 (use-package polymode
   :functions pm-around-advice polymode-inhibit-in-indirect-buffers
-  :init (pm-around-advice #'lsp #'polymode-inhibit-in-indirect-buffers))
- 
+  :config (pm-around-advice #'lsp #'polymode-inhibit-in-indirect-buffers))
+
 (use-package poly-markdown
   :mode ("\\.md" . poly-markdown-mode))
 
