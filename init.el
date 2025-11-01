@@ -84,7 +84,7 @@ do that breaks a lot of external packages.")
   :custom
   (diff-hl-show-staged-changes nil)
   (global-diff-hl-mode 1)
-  :functions diff-hl--update
+  :functions diff-hl--update-safe
   :hook ((magit-post-commit magit-post-stage magit-post-unstage) . nonk/diff-hl-update-everywhere)
   :bind (("C-c M-n" . diff-hl-next-hunk)
          ("C-c M-p" . diff-hl-previous-hunk))
@@ -93,7 +93,7 @@ do that breaks a lot of external packages.")
     (interactive)
     (dolist (buf (buffer-list))
       (when (and (buffer-live-p buf) (buffer-file-name buf))
-        (with-current-buffer buf (diff-hl--update))))))
+        (with-current-buffer buf (diff-hl--update-safe))))))
 
 (use-package projectile
   :diminish
