@@ -24,6 +24,17 @@ do that breaks a lot of external packages.")
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 (load "bootstrap-straight")
 
+(defvaralias 'coding-hook 'nonk/coding-hook
+  "Shorter, more general name for `nonk/coding-hook'.")
+(defvar nonk/coding-hook nil
+  "Functions to be run whenever I'm coding.")
+
+(defvar nonk/coding-modes
+  '(c-mode c++-mode rust-mode yaml-mode yaml-ts-mode))
+(dolist (mode nonk/coding-modes)
+  (add-hook (intern (concat (symbol-name mode) "-hook"))
+            (lambda () (run-hooks 'coding-hook))))
+
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -139,7 +150,7 @@ do that breaks a lot of external packages.")
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-completion-provider :none)
   (lsp-eldoc-render-all t)
-  :hook ((c-mode c++-mode rust-mode) . lsp)
+  :hook (coding . lsp)
   :functions lsp-format-buffer)
 
 (use-package indent-bars
@@ -171,15 +182,13 @@ do that breaks a lot of external packages.")
 (use-package dockerfile-mode)
 (use-package rust-mode)
 (use-package cmake-mode)
-
-(use-package yaml-mode
-  :hook ((yaml-mode yaml-ts-mode) . lsp))
+(use-package yaml-mode)
 
 (use-package eldoc-box
   :diminish eldoc-box-hover-mode
   :commands eldoc-box-hover-mode
   :init (defun nonk/enable-eldoc-box () (interactive) (eldoc-box-hover-mode 1))
-  :hook ((prog-mode lsp-mode) . nonk/enable-eldoc-box))
+  :hook ((prog-mode coding) . nonk/enable-eldoc-box))
 
 (use-package eldoc
   :diminish
