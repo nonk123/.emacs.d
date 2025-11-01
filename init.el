@@ -167,6 +167,11 @@ do that breaks a lot of external packages.")
   :custom (modus-themes-italic-constructs t)
   :init (load-theme 'ef-autumn t))
 
+(use-package polymode)
+
+(use-package poly-markdown
+  :mode ("\\.md" . poly-markdown-mode))
+
 (use-package dockerfile-mode)
 (use-package rust-mode)
 (use-package cmake-mode)
