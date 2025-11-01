@@ -174,6 +174,12 @@ do that breaks a lot of external packages.")
 (use-package yaml-mode
   :hook ((yaml-mode yaml-ts-mode) . lsp))
 
+(use-package eldoc-box
+  :diminish eldoc-box-hover-mode
+  :commands eldoc-box-hover-mode
+  :init (defun nonk/enable-eldoc-box () (interactive) (eldoc-box-hover-mode 1))
+  :hook ((prog-mode lsp-mode) . nonk/enable-eldoc-box))
+
 (use-package eldoc
   :diminish
   :custom (global-eldoc-mode 1))
