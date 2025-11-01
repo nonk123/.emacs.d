@@ -21,6 +21,9 @@ do that breaks a lot of external packages.")
   (with-temp-buffer (write-region (point-min) (point-max) custom-file)))
 (load-file custom-file)
 
+;; Optional chezmoi fluff:
+(load "chezmoi-defs" t)
+
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 (load "bootstrap-straight")
 
@@ -230,7 +233,6 @@ do that breaks a lot of external packages.")
   (text-mode-ispell-word-completion nil))
 
 (use-package gnus
-  :preface (setq self-hosted-email-addrs '("me@nonk.dev"))
   :custom
   (gnus-select-method '(nnnil nil))
   (gnus-secondary-select-methods
@@ -241,7 +243,7 @@ do that breaks a lot of external packages.")
                       (nnimap-stream tls)
                       (nnir-search-engine imap)
                       (nnmail-expiry-wait immediate)))
-           self-hosted-email-addrs)))
+           (bound-and-true-p self-hosted-email-addrs))))
 
 (use-package dape
   :custom
