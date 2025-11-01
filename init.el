@@ -16,6 +16,11 @@ directory.  I think it makes a lot more sense for it to expand to just
 the user's directory, but overwriting the `HOME' environment variable to
 do that breaks a lot of external packages.")
 
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(unless (file-exists-p custom-file)
+  (with-temp-buffer (write-region (point-min) (point-max) custom-file)))
+(load-file custom-file)
+
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 (load "bootstrap-straight")
 
