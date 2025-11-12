@@ -242,17 +242,21 @@ do that breaks a lot of external packages.")
 (use-package wdired
   :custom (wdired-allow-to-change-permissions t))
 
+(defun nonk/format-on-save--real ()
+  (require 'lsp-mode)
+  (cond
+   ((bound-and-true-p lsp-mode)
+    (ignore-error lsp-capability-not-supported
+      (lsp-format-buffer)))
+   (t
+    (whitespace-cleanup-region (point-min) (point-max)))))
+
 (defun nonk/format-on-save ()
   "Format the just saved file using the running language server."
   (interactive)
-  (when (nonk/vscode-setting 'format-on-save)
-    (require 'lsp-mode)
-    (cond
-     ((bound-and-true-p lsp-mode)
-      (ignore-error lsp-capability-not-supported
-        (lsp-format-buffer)))
-     (t
-      (whitespace-cleanup-region (point-min) (point-max))))))
+  (if (nonk/vscode-setting 'format-on-save)
+      (nonk/format-on-save--real)
+    (message "Formatting disabled by VSCode settings")))
 
 (use-package emacs
   :diminish abbrev-mode
