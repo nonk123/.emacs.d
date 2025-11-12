@@ -86,7 +86,7 @@ do that breaks a lot of external packages.")
   (diff-hl-show-staged-changes nil)
   (global-diff-hl-mode 1)
   :functions diff-hl--update-safe
-  :hook ((magit-post-commit magit-post-stage magit-post-unstage) . nonk/diff-hl-update-everywhere)
+  :hook ((git-commit-post-finish-hook magit-post-stage magit-post-unstage) . nonk/diff-hl-update-everywhere)
   :bind (("C-c M-n" . diff-hl-next-hunk)
          ("C-c M-p" . diff-hl-previous-hunk))
   :init
