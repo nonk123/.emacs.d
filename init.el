@@ -114,6 +114,19 @@ do that breaks a lot of external packages.")
   '((format-on-save "editor.formatOnSave" t))
   "List of VSCode settings recognized by `nonk/vscode-setting'.")
 
+(defvar nonk/vscode-language-modes
+  '((c-mode "c")
+    (web-mode "html" "jinja-html"))
+  "List of Emacs major-modes mapping to a list of possible VSCode language names.")
+
+(defun nonk/vscode-setting--get (definition alist)
+  (declare (indent 1))
+  (when-let ((value (cdr (assoc-string (car definition) alist))))
+    (cond
+     ((eq value :json-false) nil)
+     ((eq value :json-true) t)
+     (t value))))
+
 (defun nonk/vscode-setting (symbol)
   "Return the value of SYMBOL setting defined in `nonk/vscode-setting-alist'."
   (require 'project)
@@ -123,7 +136,13 @@ do that breaks a lot of external packages.")
             (settings-file (expand-file-name ".vscode/settings.json" root))
             ((file-exists-p settings-file))
             (json (json-read-file settings-file)))
-      (cdr (assoc-string (car definition) json))
+      (if-let* ((langs (alist-get major-mode nonk/vscode-language-modes)))
+          (seq-reduce
+           (lambda (sum lang)
+             (or sum (nonk/vscode-setting--get definition
+                       (cdr (assoc-string (concat "[" lang "]") json)))))
+           langs nil)
+        (nonk/vscode-setting--get definition json))
     (cdr definition)))
 
 (use-package savehist
@@ -203,6 +222,9 @@ do that breaks a lot of external packages.")
 (use-package rust-mode)
 (use-package cmake-mode)
 (use-package yaml-mode)
+
+(use-package web-mode
+  :mode ("\\.html\\.j2\\'" . web-mode))
 
 (use-package eldoc-box
   :diminish eldoc-box-hover-mode
