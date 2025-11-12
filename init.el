@@ -110,6 +110,22 @@ do that breaks a lot of external packages.")
   (projectile-mode 1)
   :bind-keymap ("C-c p" . projectile-command-map))
 
+(defvar nonk/vscode-setting-alist
+  '((format-on-save "editor.formatOnSave" t))
+  "List of VSCode settings recognized by `nonk/vscode-setting'.")
+
+(defun nonk/vscode-setting (symbol)
+  "Return the value of SYMBOL setting defined in `nonk/vscode-setting-alist'."
+  (require 'project)
+  (if-let* ((definition (alist-get symbol nonk/vscode-setting-alist))
+            (project (project-current))
+            (root (project-root project))
+            (settings-file (expand-file-name ".vscode/settings.json" root))
+            ((file-exists-p settings-file))
+            (json (json-read-file settings-file)))
+      (cdr (assoc-string (car definition) json))
+    (cdr definition)))
+
 (use-package savehist
   :custom (savehist-mode 1))
 
@@ -207,10 +223,14 @@ do that breaks a lot of external packages.")
 (defun nonk/format-on-save ()
   "Format the just saved file using the running language server."
   (interactive)
-  (when (bound-and-true-p lsp-mode)
+  (when (nonk/vscode-setting 'format-on-save)
     (require 'lsp-mode)
-    (ignore-error lsp-capability-not-supported
-      (lsp-format-buffer))))
+    (cond
+     ((bound-and-true-p lsp-mode)
+      (ignore-error lsp-capability-not-supported
+        (lsp-format-buffer)))
+     (t
+      (whitespace-cleanup-region (point-min) (point-max))))))
 
 (use-package emacs
   :diminish abbrev-mode
