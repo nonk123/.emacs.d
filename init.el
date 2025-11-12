@@ -21,11 +21,11 @@ do that breaks a lot of external packages.")
   (with-temp-buffer (write-region (point-min) (point-max) custom-file)))
 (load-file custom-file)
 
-;; Optional chezmoi fluff:
-(load "chezmoi-defs" t)
-
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 (load "bootstrap-straight")
+
+;; Optional chezmoi fluff:
+(load "chezmoi-defs" t)
 
 (defvaralias 'coding-hook 'nonk/coding-hook
   "Shorter, more general name for `nonk/coding-hook'.")
