@@ -346,13 +346,13 @@ do that breaks a lot of external packages.")
               (project-root (project-root project))
               (cmakelists-path (expand-file-name "CMakeLists.txt" project-root)))
         (file-exists-p cmakelists-path)))
-  (defun cmake-project-mode-turn-on-in-cmake-projects ()
-    "Turn on `cmake-project-mode' in buffers belonging to a CMake project."
+  (defun cmake-project-mode-enable-in-cmake-projects ()
+    "Enable `cmake-project-mode' in buffers belonging to a CMake project."
     (cmake-project-mode (if (nonk/is-cmake-project?) 1 -1)))
   (define-minor-mode cmake-project-mode
     "A mode enabled for buffers belonging to a CMake project."
     :keymap cmake-project-mode-map)
-  (define-globalized-minor-mode cmake-detect-project-mode cmake-project-mode cmake-project-mode-turn-on-in-cmake-projects)
+  (define-globalized-minor-mode cmake-detect-project-mode cmake-project-mode cmake-project-mode-enable-in-cmake-projects)
   (cmake-detect-project-mode 1))
 
 ;;; init.el ends here
