@@ -83,6 +83,12 @@ do that breaks a lot of external packages.")
 
 (use-package forge)
 
+(defun nonk/diff-hl-update-everywhere ()
+  "Update `diff-hl' gutter in all buffers."
+  (dolist (buf (buffer-list))
+    (when (and (buffer-live-p buf) (buffer-file-name buf))
+      (with-current-buffer buf (diff-hl--update-safe)))))
+
 (use-package diff-hl
   :after magit
   :custom
@@ -91,13 +97,7 @@ do that breaks a lot of external packages.")
   :functions diff-hl--update-safe
   :hook ((git-commit-post-finish-hook magit-post-stage magit-post-unstage) . nonk/diff-hl-update-everywhere)
   :bind (("C-c M-n" . diff-hl-next-hunk)
-         ("C-c M-p" . diff-hl-previous-hunk))
-  :init
-  (defun nonk/diff-hl-update-everywhere ()
-    (interactive)
-    (dolist (buf (buffer-list))
-      (when (and (buffer-live-p buf) (buffer-file-name buf))
-        (with-current-buffer buf (diff-hl--update-safe))))))
+         ("C-c M-p" . diff-hl-previous-hunk)))
 
 (use-package projectile
   :diminish
@@ -235,10 +235,14 @@ do that breaks a lot of external packages.")
 (use-package web-mode
   :mode ("\\.html\\.j2\\'" . web-mode))
 
+(defun nonk/enable-eldoc-box ()
+  "Force `eldoc-box-hover-mode' on."
+  (interactive)
+  (eldoc-box-hover-mode 1))
+
 (use-package eldoc-box
   :diminish eldoc-box-hover-mode
   :commands eldoc-box-hover-mode
-  :init (defun nonk/enable-eldoc-box () (interactive) (eldoc-box-hover-mode 1))
   :hook ((prog-mode coding) . nonk/enable-eldoc-box))
 
 (use-package eldoc
@@ -252,6 +256,7 @@ do that breaks a lot of external packages.")
   :custom (wdired-allow-to-change-permissions t))
 
 (defun nonk/format-on-save--real ()
+  "Do the actual formatting."
   (require 'lsp-mode)
   (cond
    ((bound-and-true-p lsp-mode)
