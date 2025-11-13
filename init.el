@@ -265,7 +265,7 @@ do that breaks a lot of external packages.")
   (interactive)
   (if (nonk/vscode-setting 'format-on-save)
       (nonk/format-on-save--real)
-    (message "Formatting disabled by VSCode settings")))
+    (message "Formatting inhibited by VSCode settings.json")))
 
 (use-package emacs
   :diminish abbrev-mode
