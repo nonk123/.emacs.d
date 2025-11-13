@@ -134,20 +134,21 @@ do that breaks a lot of external packages.")
 (defun nonk/vscode-setting (symbol)
   "Return the value of SYMBOL setting defined in `nonk/vscode-setting-alist'."
   (require 'project)
-  (when-let ((definition (alist-get symbol nonk/vscode-setting-alist)))
-    (if-let* ((project (project-current))
+  (when-let* ((definition (alist-get symbol nonk/vscode-setting-alist))
+              (project (project-current))
               (root (project-root project))
               (settings-file (expand-file-name ".vscode/settings.json" root))
               ((file-exists-p settings-file))
               (json (json-read-file settings-file)))
-        (if-let* ((langs (alist-get major-mode nonk/vscode-language-modes)))
-            (seq-reduce
-             (lambda (sum lang)
-               (or sum (nonk/vscode-setting--get definition
-                         (cdr (assoc-string (concat "[" lang "]") json)))))
-             langs nil)
-          (nonk/vscode-setting--get definition json))
-      (cdr definition))))
+    (or (when-let ((langs (alist-get major-mode nonk/vscode-language-modes)))
+          (seq-reduce
+           (lambda (sum lang)
+             (or sum (let ((key (concat "[" lang "]")))
+                       (nonk/vscode-setting--get definition
+                         (cdr (assoc-string key json))))))
+           langs nil))
+        (nonk/vscode-setting--get definition json)
+        (cdr definition))))
 
 (use-package savehist
   :custom (savehist-mode 1))
