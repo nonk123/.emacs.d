@@ -200,7 +200,7 @@ do that breaks a lot of external packages.")
 (use-package indent-bars
   :disabled
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
-  :hook (lsp-mode . indent-bars-mode)
+  :hook lsp-mode
   :custom
   (indent-bars-treesit-support t)
   (indent-bars-starting-column 0)
@@ -214,7 +214,7 @@ do that breaks a lot of external packages.")
 
 (use-package aggressive-indent
   :diminish
-  :hook (emacs-lisp-mode . aggressive-indent-mode))
+  :hook emacs-lisp-mode)
 
 (use-package ef-themes
   :custom (modus-themes-italic-constructs t)
