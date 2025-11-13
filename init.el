@@ -216,6 +216,16 @@ do that breaks a lot of external packages.")
   :diminish
   :hook emacs-lisp-mode)
 
+(use-package emojify
+  :custom
+  (emojify-display-style 'unicode)
+  (emojify-emoji-styles '(unicode github))
+  (global-emojify-mode 1)
+  :config
+  (when-let* ((emoji-font "Segoe UI Emoji")
+              ((member emoji-font (font-family-list))))
+    (set-fontset-font t 'symbol (font-spec :family emoji-font) nil 'prepend)))
+
 (use-package ef-themes
   :custom (modus-themes-italic-constructs t)
   :init (load-theme 'ef-autumn t))
