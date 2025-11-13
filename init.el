@@ -328,6 +328,14 @@ do that breaks a lot of external packages.")
   (cmake-integration-generator "Ninja")
   (cmake-integration-use-separated-compilation-buffer-for-each-target t)
   (cmake-integration-debug-launcher-function 'dape)
+  :bind
+  (:map cmake-project-mode-map
+        ([f3] . cmake-integration-select-current-target)
+        ([f4] . cmake-integration-transient)
+        ([f5] . cmake-integration-run-last-target)
+        ([f6] . cmake-integration-debug-last-target)
+        ([f9] . cmake-integration-save-and-compile-last-target)
+        ([f10] . cmake-integration-cmake-reconfigure))
   :init
   ;; Thanks <https://github.com/darcamo/cmake-integration#example-keybindings>.
   (defvar cmake-project-mode-map (make-sparse-keymap))
@@ -345,13 +353,6 @@ do that breaks a lot of external packages.")
     "A mode enabled for buffers belonging to a CMake project."
     :keymap cmake-project-mode-map)
   (define-globalized-minor-mode cmake-detect-project-mode cmake-project-mode cmake-project-mode-turn-on-in-cmake-projects)
-  (cmake-detect-project-mode 1)
-  (bind-keys :map cmake-project-mode-map
-             ([f3] . cmake-integration-select-current-target)
-             ([f4] . cmake-integration-transient)
-             ([f5] . cmake-integration-run-last-target)
-             ([f6] . cmake-integration-debug-last-target)
-             ([f9] . cmake-integration-save-and-compile-last-target)
-             ([f10] . cmake-integration-cmake-reconfigure)))
+  (cmake-detect-project-mode 1))
 
 ;;; init.el ends here
