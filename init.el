@@ -44,6 +44,9 @@ do that breaks a lot of external packages.")
 (global-display-line-numbers-mode 1)
 (column-number-mode 1)
 
+(electric-indent-mode -1)
+(electric-pair-mode -1)
+
 (delete-selection-mode 1)
 (setq kill-whole-line t)
 
@@ -207,6 +210,10 @@ do that breaks a lot of external packages.")
 (use-package dtrt-indent
   :diminish
   :custom (dtrt-indent-global-mode 1))
+
+(use-package aggressive-indent
+  :diminish
+  :hook (emacs-lisp-mode . aggressive-indent-mode))
 
 (use-package ef-themes
   :custom (modus-themes-italic-constructs t)
