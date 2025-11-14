@@ -47,7 +47,7 @@ do that breaks a lot of external packages.")
 (global-display-line-numbers-mode 1)
 (column-number-mode 1)
 
-(electric-indent-mode -1)
+(electric-indent-mode 1)
 (electric-pair-mode -1)
 
 (delete-selection-mode 1)
@@ -210,7 +210,9 @@ do that breaks a lot of external packages.")
 
 (use-package dtrt-indent
   :diminish
-  :custom (dtrt-indent-global-mode 1))
+  :custom
+  (setq dtrt-indent-run-after-smie t)
+  (dtrt-indent-global-mode 1))
 
 (use-package aggressive-indent
   :diminish
@@ -304,6 +306,7 @@ do that breaks a lot of external packages.")
   (read-extended-command-predicate #'command-completion-default-include-p)
   (completion-auto-help nil)
   (use-short-answers t)
+  (open-paren-in-column-0-is-defun-start nil)
   (minibuffer-prompt-properties
    '(read-only t cursor-intangible t face minibuffer-prompt))
   (text-mode-ispell-word-completion nil))
