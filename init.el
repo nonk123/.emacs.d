@@ -294,7 +294,7 @@ do that breaks a lot of external packages.")
 
 (use-package emacs
   :diminish abbrev-mode
-  :hook (after-save . nonk/format-on-save)
+  :hook (before-save . nonk/format-on-save)
   :bind (("C-'" . completion-at-point)
          ("M-n" . scroll-up-line)
          ("M-p" . scroll-down-line))
