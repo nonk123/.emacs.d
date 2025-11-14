@@ -120,7 +120,7 @@ do that breaks a lot of external packages.")
   :bind-keymap ("C-c p" . projectile-command-map))
 
 (defvar nonk/vscode-setting-alist
-  '((format-on-save "editor.formatOnSave" :json-true))
+  '((format-on-save "editor.formatOnSave" t))
   "List of VSCode settings recognized by `nonk/vscode-setting'.")
 
 (defvar nonk/vscode-language-modes
@@ -131,7 +131,7 @@ do that breaks a lot of external packages.")
 (defun nonk/vscode-setting--get (definition alist)
   "Fetch and parse a symbol's value from ALIST by its DEFINITION."
   (declare (indent 1))
-  (cdr (assoc-string (car definition) alist)))
+  (cdr-safe (assoc-string (car definition) alist)))
 
 (defun nonk/vscode-setting (symbol)
   "Return the value of SYMBOL setting defined in `nonk/vscode-setting-alist'."
@@ -142,12 +142,13 @@ do that breaks a lot of external packages.")
               ((file-exists-p settings-file))
               (json (json-read-file settings-file)))
     (or (when-let ((langs (alist-get major-mode nonk/vscode-language-modes)))
-          (seq-reduce
-           (lambda (sum lang)
-             (or sum (let ((key (concat "[" lang "]")))
-                       (nonk/vscode-setting--get definition
-                         (cdr (assoc-string key json))))))
-           langs nil))
+          (let ((result))
+            (while (and langs (null result))
+              (setq result
+                    (nonk/vscode-setting--get definition
+                      (cdr-safe (assoc-string (concat "[" (car langs) "]") json))))
+              (setq langs (cdr langs)))
+            result))
         (nonk/vscode-setting--get definition json)
         (cdr definition))))
 
@@ -195,6 +196,7 @@ do that breaks a lot of external packages.")
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-completion-provider :none)
   (lsp-eldoc-render-all t)
+  (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   :hook (coding . lsp)
   :functions lsp-format-buffer)
 
@@ -286,7 +288,7 @@ do that breaks a lot of external packages.")
   "Format the just saved file using the running language server."
   (interactive)
   (when-let ((value (nonk/vscode-setting 'format-on-save)))
-    (if (eq value :json-true)
+    (if (eq value t)
         (nonk/format-on-save--real)
       (message "Formatting inhibited by VSCode settings.json"))))
 
