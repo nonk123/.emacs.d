@@ -102,6 +102,8 @@ do that breaks a lot of external packages.")
   :bind (("C-c M-n" . diff-hl-next-hunk)
          ("C-c M-p" . diff-hl-previous-hunk)))
 
+(use-package project)
+
 (use-package projectile
   :diminish
   :custom
@@ -132,7 +134,6 @@ do that breaks a lot of external packages.")
 
 (defun nonk/vscode-setting (symbol)
   "Return the value of SYMBOL setting defined in `nonk/vscode-setting-alist'."
-  (require 'project)
   (when-let* ((definition (alist-get symbol nonk/vscode-setting-alist))
               (project (project-current))
               (root (project-root project))
