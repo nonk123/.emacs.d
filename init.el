@@ -114,7 +114,7 @@ do that breaks a lot of external packages.")
   :bind-keymap ("C-c p" . projectile-command-map))
 
 (defvar nonk/vscode-setting-alist
-  '((format-on-save "editor.formatOnSave" t))
+  '((format-on-save "editor.formatOnSave" :json-true))
   "List of VSCode settings recognized by `nonk/vscode-setting'.")
 
 (defvar nonk/vscode-language-modes
@@ -125,11 +125,7 @@ do that breaks a lot of external packages.")
 (defun nonk/vscode-setting--get (definition alist)
   "Fetch and parse a symbol's value from ALIST by its DEFINITION."
   (declare (indent 1))
-  (when-let ((value (cdr (assoc-string (car definition) alist))))
-    (cond
-     ((eq value :json-false) nil)
-     ((eq value :json-true) t)
-     (t value))))
+  (cdr (assoc-string (car definition) alist)))
 
 (defun nonk/vscode-setting (symbol)
   "Return the value of SYMBOL setting defined in `nonk/vscode-setting-alist'."
@@ -278,9 +274,10 @@ do that breaks a lot of external packages.")
 (defun nonk/format-on-save ()
   "Format the just saved file using the running language server."
   (interactive)
-  (if (nonk/vscode-setting 'format-on-save)
-      (nonk/format-on-save--real)
-    (message "Formatting inhibited by VSCode settings.json")))
+  (when-let ((value (nonk/vscode-setting 'format-on-save)))
+    (if (eq value :json-true)
+        (nonk/format-on-save--real)
+      (message "Formatting inhibited by VSCode settings.json"))))
 
 (use-package emacs
   :diminish abbrev-mode
