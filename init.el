@@ -9,7 +9,7 @@
 
 (defconst nonk/home
   (if nonk/windose? (concat "C:/Users/" (user-login-name) "/") (expand-file-name "~/"))
-  "Should be used instead of `~' in filenames for portability reasons.
+  "Should be used instead of `~' in code for portability reasons.
 
 In GNU/Emacs for Windows, `~' expands to the user's `AppData/Roaming'
 directory.  I think it makes a lot more sense for it to expand to just
@@ -108,7 +108,8 @@ do that breaks a lot of external packages.")
   :diminish
   :custom
   (projectile-project-search-path
-   `((,(expand-file-name "Sources" nonk/home) . 1) ("~" . 1)))
+   `((,(expand-file-name "Sources" nonk/home) . 1)
+     ("~" . 1))) ; `~` intentional: this finds `.emacs.d` automatically on Windows
   (projectile-current-project-on-switch 'keep)
   (projectile-enable-caching t)
   (projectile-indexing-method 'alien)
