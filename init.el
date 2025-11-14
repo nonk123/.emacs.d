@@ -24,6 +24,9 @@ do that breaks a lot of external packages.")
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 (load "bootstrap-straight")
 
+(declare-function straight-use-package "bootstrap-straight")
+(straight-use-package 'use-package)
+
 ;; Optional chezmoi fluff:
 (load "chezmoi-defs" t)
 
