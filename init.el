@@ -227,8 +227,12 @@ do that breaks a lot of external packages.")
     (set-fontset-font t 'symbol (font-spec :family emoji-font) nil 'prepend)))
 
 (use-package ef-themes
+  :disabled
   :custom (modus-themes-italic-constructs t)
   :init (load-theme 'ef-autumn t))
+
+(use-package color-theme-sanityinc-tomorrow
+  :init (load-theme 'sanityinc-tomorrow-night t))
 
 (use-package polymode
   :functions pm-around-advice polymode-inhibit-in-indirect-buffers
