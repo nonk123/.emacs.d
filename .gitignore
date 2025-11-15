@@ -14,4 +14,4 @@
 !snippets/**/*.yas
 
 !tree-sitter
-!tree-sitter/*.dll
+!tree-sitter/libtree-sitter-*.dll
