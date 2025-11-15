@@ -343,7 +343,7 @@ do that breaks a lot of external packages.")
    (mapcar (lambda (addr)
              `(nnimap "mx.q7x.ru"
                       (nnimap-user ,addr)
-                      (nnimap-server-port imaps)
+                      (nnimap-server-port 993)
                       (nnimap-stream tls)
                       (nnir-search-engine imap)
                       (nnmail-expiry-wait immediate)))
