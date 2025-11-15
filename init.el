@@ -195,6 +195,7 @@ do that breaks a lot of external packages.")
   (lsp-keymap-prefix "C-c l")
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-completion-provider :none)
+  (lsp-enable-suggest-server-download nil)
   (lsp-eldoc-render-all t)
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   :hook (coding . lsp)
