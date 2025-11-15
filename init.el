@@ -36,7 +36,7 @@ do that breaks a lot of external packages.")
   "Functions to be run whenever I'm coding.")
 
 (defvar nonk/coding-modes
-  '(c-mode c++-mode rust-mode yaml-mode yaml-ts-mode))
+  '(c-mode c++-mode rust-ts-mode yaml-ts-mode))
 (dolist (mode nonk/coding-modes)
   (add-hook (intern (concat (symbol-name mode) "-hook"))
             (lambda () (run-hooks 'coding-hook))))
@@ -200,7 +200,8 @@ do that breaks a lot of external packages.")
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   (lsp-clients-clangd-args '("--header-insertion=never"))
   :hook ((coding poly-markdown-mode) . lsp)
-  :functions lsp-format-buffer)
+  :functions lsp-format-buffer lsp-register-client make-lsp-client lsp-stdio-connection lsp-activate-on
+  :defines lsp-language-id-configuration)
 
 (use-package indent-bars
   :disabled
@@ -242,6 +243,9 @@ do that breaks a lot of external packages.")
 (use-package color-theme-sanityinc-tomorrow
   :init (load-theme 'sanityinc-tomorrow-night t))
 
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
+
 (use-package polymode
   :functions pm-around-advice polymode-inhibit-in-indirect-buffers
   :config (pm-around-advice #'lsp #'polymode-inhibit-in-indirect-buffers))
@@ -250,12 +254,26 @@ do that breaks a lot of external packages.")
   :mode ("\\.md\\'" . poly-markdown-mode))
 
 (use-package dockerfile-mode)
-(use-package rust-mode)
-(use-package cmake-mode)
-(use-package yaml-mode)
+
+(use-package yaml-ts-mode
+  :mode "\\.ya?ml\\'")
+
+(use-package cmake-ts-mode
+  :mode "CMakeLists\\.txt\\'" "\\.cmake\\'"
+  :init
+  (defvar nonk/neocmakelsp-path (concat "neocmakelsp" (when nonk/windose? ".exe")))
+  (add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "stdio"))
+                    ; NOTE: ^ `--stdio` flag -> `stdio` subcommand because of `0b3ea00` which JUST came out...
+                    :activation-fn (lsp-activate-on "cmake")
+                    :server-id 'neocmakelsp)))
 
 (use-package web-mode
-  :mode ("\\.html\\.j2\\'" . web-mode))
+  :mode "\\.html\\.j2\\'")
+
+(use-package emacs
+  :mode ("\\.rs\\'" . rust-ts-mode))
 
 (defun nonk/enable-eldoc-box ()
   "Force `eldoc-box-hover-mode' on."
