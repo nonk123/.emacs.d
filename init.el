@@ -199,7 +199,7 @@ do that breaks a lot of external packages.")
   (lsp-eldoc-render-all t)
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   (lsp-clients-clangd-args '("--header-insertion=never"))
-  :hook (coding . lsp)
+  :hook ((coding poly-markdown-mode) . lsp)
   :functions lsp-format-buffer)
 
 (use-package indent-bars
