@@ -259,16 +259,16 @@ do that breaks a lot of external packages.")
   :mode "\\.ya?ml\\'")
 
 (use-package cmake-ts-mode
-  :mode "CMakeLists\\.txt\\'" "\\.cmake\\'"
-  :init
-  (defvar nonk/neocmakelsp-path
-    (if nonk/windose? (expand-file-name "bundled/neocmakelsp.exe" user-emacs-directory) "neocmakelsp"))
-  (add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "--stdio"))
-                    :activation-fn (lsp-activate-on "cmake")
-                    :language-id "cmake"
-                    :server-id 'neocmakelsp)))
+  :mode "CMakeLists\\.txt\\'" "\\.cmake\\'")
+
+(defvar nonk/neocmakelsp-path
+  (if nonk/windose? (expand-file-name "bundled/neocmakelsp.exe" user-emacs-directory) "neocmakelsp"))
+(add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "--stdio"))
+                  :activation-fn (lsp-activate-on "cmake")
+                  :language-id "cmake"
+                  :server-id 'neocmakelsp))
 
 (use-package web-mode
   :mode "\\.html\\.j2\\'")
@@ -368,24 +368,24 @@ do that breaks a lot of external packages.")
         ([f5] . cmake-integration-run-last-target)
         ([f6] . cmake-integration-debug-last-target)
         ([f9] . cmake-integration-save-and-compile-last-target)
-        ([f10] . cmake-integration-cmake-reconfigure))
-  :init
-  ;; Thanks <https://github.com/darcamo/cmake-integration#example-keybindings>.
-  (defvar cmake-project-mode-map (make-sparse-keymap))
-  (defun nonk/is-cmake-project? ()
-    "Determine if the current directory is inside of a CMake project."
-    (interactive)
-    (when-let* ((project (project-current))
-                (project-root (project-root project))
-                (cmakelists-path (expand-file-name "CMakeLists.txt" project-root)))
-      (file-exists-p cmakelists-path)))
-  (defun cmake-project-mode-enable-in-cmake-projects ()
-    "Enable `cmake-project-mode' in buffers belonging to a CMake project."
-    (cmake-project-mode (if (nonk/is-cmake-project?) 1 -1)))
-  (define-minor-mode cmake-project-mode
-    "Auto-enabled for buffers detected as belonging to a CMake project."
-    :keymap cmake-project-mode-map)
-  (define-globalized-minor-mode cmake-detect-project-mode cmake-project-mode cmake-project-mode-enable-in-cmake-projects)
-  (cmake-detect-project-mode 1))
+        ([f10] . cmake-integration-cmake-reconfigure)))
+
+;; Thanks <https://github.com/darcamo/cmake-integration#example-keybindings>.
+(defvar cmake-project-mode-map (make-sparse-keymap))
+(defun nonk/is-cmake-project? ()
+  "Determine if the current directory is inside of a CMake project."
+  (interactive)
+  (when-let* ((project (project-current))
+              (project-root (project-root project))
+              (cmakelists-path (expand-file-name "CMakeLists.txt" project-root)))
+    (file-exists-p cmakelists-path)))
+(defun cmake-project-mode-enable-in-cmake-projects ()
+  "Enable `cmake-project-mode' in buffers belonging to a CMake project."
+  (cmake-project-mode (if (nonk/is-cmake-project?) 1 -1)))
+(define-minor-mode cmake-project-mode
+  "Auto-enabled for buffers detected as belonging to a CMake project."
+  :keymap cmake-project-mode-map)
+(define-globalized-minor-mode cmake-detect-project-mode cmake-project-mode cmake-project-mode-enable-in-cmake-projects)
+(cmake-detect-project-mode 1)
 
 ;;; init.el ends here
