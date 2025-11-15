@@ -264,8 +264,7 @@ do that breaks a lot of external packages.")
   (defvar nonk/neocmakelsp-path (concat "neocmakelsp" (when nonk/windose? ".exe")))
   (add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
   (lsp-register-client
-   ;; NOTE: `--stdio` flag -> `stdio` subcommand because of `0b3ea00` which JUST came out...
-   (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "stdio"))
+   (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "--stdio"))
                     :activation-fn (lsp-activate-on "cmake")
                     :language-id "cmake"
                     :server-id 'neocmakelsp)))
