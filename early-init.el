@@ -1,5 +1,10 @@
+;;; early-init.el --- nonk's GNU/Emacs config: early init -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;;; Code:
+
 (setq inhibit-splash-screen t)
-(setq doom-modeline-support-imenu t) ; weird shiz
 
 ;; Enforce `straight' usage.
 (setq package-enable-at-startup nil)
@@ -14,5 +19,6 @@
 (setq initial-scratch-message "")
 
 ;; Thanks <https://stackoverflow.com/a/79042584>.
-(when initial-window-system
-  (add-to-list 'default-frame-alist '(font . "Consolas-9")))
+(add-to-list 'default-frame-alist '(font . "Consolas-9"))
+
+;;; early-init.el ends here
