@@ -225,13 +225,14 @@ do that breaks a lot of external packages.")
 
 (use-package emojify
   :custom
+  (use-default-font-for-symbols nil)
   (emojify-display-style 'unicode)
   (emojify-emoji-styles '(unicode github))
   (global-emojify-mode 1)
   :config
-  (when-let* ((emoji-font "Segoe UI Emoji")
-              ((member emoji-font (font-family-list))))
-    (set-fontset-font t 'symbol (font-spec :family emoji-font) nil 'prepend)))
+  (defvar nonk/emoji-font "Segoe UI Emoji")
+  (when (member nonk/emoji-font (font-family-list))
+    (set-fontset-font t 'emoji nonk/emoji-font)))
 
 (use-package ef-themes
   :disabled
