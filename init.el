@@ -363,7 +363,7 @@ do that breaks a lot of external packages.")
     "Enable `cmake-project-mode' in buffers belonging to a CMake project."
     (cmake-project-mode (if (nonk/is-cmake-project?) 1 -1)))
   (define-minor-mode cmake-project-mode
-    "A mode enabled for buffers belonging to a CMake project."
+    "Auto-enabled for buffers detected as belonging to a CMake project."
     :keymap cmake-project-mode-map)
   (define-globalized-minor-mode cmake-detect-project-mode cmake-project-mode cmake-project-mode-enable-in-cmake-projects)
   (cmake-detect-project-mode 1))
