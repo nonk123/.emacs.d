@@ -198,6 +198,7 @@ do that breaks a lot of external packages.")
   (lsp-enable-suggest-server-download nil)
   (lsp-eldoc-render-all t)
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
+  (lsp-clients-clangd-args '("--header-insertion=never"))
   :hook (coding . lsp)
   :functions lsp-format-buffer)
 
