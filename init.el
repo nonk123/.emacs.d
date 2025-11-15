@@ -261,7 +261,8 @@ do that breaks a lot of external packages.")
 (use-package cmake-ts-mode
   :mode "CMakeLists\\.txt\\'" "\\.cmake\\'"
   :init
-  (defvar nonk/neocmakelsp-path (concat "neocmakelsp" (when nonk/windose? ".exe")))
+  (defvar nonk/neocmakelsp-path
+    (if nonk/windose? (expand-file-name "bundled/neocmakelsp.exe" user-emacs-directory) "neocmakelsp"))
   (add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "--stdio"))

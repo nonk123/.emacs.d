@@ -15,3 +15,6 @@
 
 !tree-sitter
 !tree-sitter/libtree-sitter-*.dll
+
+!bundled
+!bundled/*.exe
