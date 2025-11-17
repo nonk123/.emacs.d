@@ -370,21 +370,20 @@ do that breaks a lot of external packages.")
         ([f10] . cmake-integration-cmake-reconfigure)))
 
 ;; Thanks <https://github.com/darcamo/cmake-integration#example-keybindings>.
+
 (defvar cmake-project-mode-map (make-sparse-keymap))
-(defun nonk/is-cmake-project? ()
-  "Determine if the current directory is inside of a CMake project."
-  (interactive)
+
+(defun try-enable-cmake-project-mode ()
+  "Enable `cmake-project-mode' in buffers belonging to a CMake project."
   (when-let* ((project (project-current))
               (project-root (project-root project))
-              (cmakelists-path (expand-file-name "CMakeLists.txt" project-root)))
-    (file-exists-p cmakelists-path)))
-(defun cmake-project-mode-enable-in-cmake-projects ()
-  "Enable `cmake-project-mode' in buffers belonging to a CMake project."
-  (cmake-project-mode (if (nonk/is-cmake-project?) 1 -1)))
+              ((file-exists-p (expand-file-name "CMakeLists.txt" project-root))))
+    (cmake-project-mode 1)))
+
 (define-minor-mode cmake-project-mode
   "Auto-enabled for buffers detected as belonging to a CMake project."
   :keymap cmake-project-mode-map)
-(define-globalized-minor-mode cmake-detect-project-mode cmake-project-mode cmake-project-mode-enable-in-cmake-projects)
-(cmake-detect-project-mode 1)
+(define-globalized-minor-mode detect-cmake-project-mode cmake-project-mode try-enable-cmake-project-mode)
+(detect-cmake-project-mode 1)
 
 ;;; init.el ends here
