@@ -390,4 +390,12 @@ do that breaks a lot of external packages.")
 
 (detect-cmake-project-mode 1)
 
+(defun nonk/suspend-frame ()
+  "Call `suspend-frame' ONLY in terminal-mode frames."
+  (interactive)
+  (unless (display-graphic-p)
+    (call-interactively #'suspend-frame)))
+
+(bind-key [remap suspend-frame] #'nonk/suspend-frame)
+
 ;;; init.el ends here
