@@ -1,4 +1,4 @@
-;;; init.el --- nonk's GNU/Emacs config -*- lexical-binding: t; -*-
+﻿;;; init.el --- nonk's GNU/Emacs config -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -190,7 +190,13 @@ do that breaks a lot of external packages.")
   (global-corfu-mode 1)
   (corfu-echo-mode 1))
 
+(defvar nonk/neocmakelsp-path
+  (if nonk/windose? (expand-file-name "bundled/neocmakelsp.exe" user-emacs-directory) "neocmakelsp"))
+
 (use-package lsp-mode
+  :demand t
+  :functions lsp-format-buffer lsp-register-client make-lsp-client lsp-stdio-connection lsp-activate-on
+  :defines lsp-language-id-configuration
   :custom
   (lsp-keymap-prefix "C-c l")
   (lsp-headerline-breadcrumb-enable nil)
@@ -200,8 +206,13 @@ do that breaks a lot of external packages.")
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   (lsp-clients-clangd-args '("--header-insertion=never"))
   :hook ((coding poly-markdown-mode) . lsp)
-  :functions lsp-format-buffer lsp-register-client make-lsp-client lsp-stdio-connection lsp-activate-on
-  :defines lsp-language-id-configuration)
+  :config
+  (add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "--stdio"))
+                    :activation-fn (lsp-activate-on "cmake")
+                    :language-id "cmake"
+                    :server-id 'neocmakelsp)))
 
 (use-package indent-bars
   :disabled
@@ -243,9 +254,6 @@ do that breaks a lot of external packages.")
 (use-package color-theme-sanityinc-tomorrow
   :init (load-theme 'sanityinc-tomorrow-night t))
 
-(use-package tree-sitter)
-(use-package tree-sitter-langs)
-
 (use-package polymode
   :functions pm-around-advice polymode-inhibit-in-indirect-buffers
   :config (pm-around-advice #'lsp #'polymode-inhibit-in-indirect-buffers))
@@ -260,15 +268,6 @@ do that breaks a lot of external packages.")
 
 (use-package cmake-ts-mode
   :mode "CMakeLists\\.txt\\'" "\\.cmake\\'")
-
-(defvar nonk/neocmakelsp-path
-  (if nonk/windose? (expand-file-name "bundled/neocmakelsp.exe" user-emacs-directory) "neocmakelsp"))
-(add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
-(lsp-register-client
- (make-lsp-client :new-connection (lsp-stdio-connection (list nonk/neocmakelsp-path "--stdio"))
-                  :activation-fn (lsp-activate-on "cmake")
-                  :language-id "cmake"
-                  :server-id 'neocmakelsp))
 
 (use-package web-mode
   :mode "\\.html\\.j2\\'")
