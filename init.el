@@ -79,6 +79,7 @@ do that breaks a lot of external packages.")
 
 (use-package editorconfig
   :diminish
+  :straight (:type built-in)
   :custom (editorconfig-mode 1))
 
 (use-package magit
