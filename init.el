@@ -217,7 +217,7 @@ do that breaks a lot of external packages.")
 
 (use-package indent-bars
   :disabled
-  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :straight (:type git :host github :repo "jdtsmith/indent-bars")
   :hook lsp-mode
   :custom
   (indent-bars-treesit-support t)
@@ -356,7 +356,7 @@ do that breaks a lot of external packages.")
   (dape-buffer-window-arrangement 'right))
 
 (use-package cmake-integration
-  :straight (cmake-integration :type git :host github :repo "darcamo/cmake-integration")
+  :straight (:type git :host github :repo "darcamo/cmake-integration")
   :custom
   (cmake-integration-generator "Ninja")
   (cmake-integration-use-separated-compilation-buffer-for-each-target t)
