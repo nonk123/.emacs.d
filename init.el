@@ -70,9 +70,11 @@ do that breaks a lot of external packages.")
 
 (use-package smartparens
   :diminish
-  :bind (([remap forward-sexp] . sp-forward-sexp)
-         ([remap backward-sexp] . sp-backward-sexp)
-         ([remap transpose-sexp] . sp-transpose-sexp))
+  :defines smartparens-mode-map
+  :bind (:map smartparens-mode-map
+              ([remap forward-sexp] . sp-forward-sexp)
+              ([remap backward-sexp] . sp-backward-sexp)
+              ([remap transpose-sexp] . sp-transpose-sexp))
   :custom
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1))
