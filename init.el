@@ -304,7 +304,7 @@ do that breaks a lot of external packages.")
     (ignore-error lsp-capability-not-supported
       (lsp-format-buffer)))
    (t
-    (whitespace-cleanup-region (point-min) (point-max)))))
+    (message "Couldn't find a suitable formatter"))))
 
 (defun nonk/format-on-save ()
   "Format the just saved file using the running language server."
