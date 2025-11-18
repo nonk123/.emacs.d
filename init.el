@@ -360,6 +360,7 @@ do that breaks a lot of external packages.")
   (cmake-integration-generator "Ninja")
   (cmake-integration-use-separated-compilation-buffer-for-each-target t)
   (cmake-integration-debug-launcher-function 'dape)
+  (cmake-integration-program-launcher-function 'compilation)
   :bind (:map cmake-project-mode-map
               ([f3] . cmake-integration-select-current-target)
               ([f4] . cmake-integration-transient)
