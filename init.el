@@ -306,7 +306,6 @@ do that breaks a lot of external packages.")
 
 (defun nonk/format-on-save--real ()
   "Do the actual formatting."
-  (require 'lsp-mode)
   (cond
    ((bound-and-true-p lsp-mode)
     (ignore-error lsp-capability-not-supported
