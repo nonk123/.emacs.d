@@ -150,14 +150,14 @@ do that breaks a lot of external packages.")
               (settings-file (expand-file-name ".vscode/settings.json" root))
               ((file-exists-p settings-file))
               (json (json-read-file settings-file)))
-    (or (when-let ((langs (alist-get major-mode nonk/vscode-language-modes)))
-          (let ((result))
-            (while (and langs (null result))
-              (setq result
-                    (nonk/vscode-setting--get definition
-                      (cdr-safe (assoc-string (concat "[" (car langs) "]") json))))
-              (setq langs (cdr langs)))
-            result))
+    (or (let ((langs (alist-get major-mode nonk/vscode-language-modes))
+              result)
+          (while (and langs (null result))
+            (setq result
+                  (nonk/vscode-setting--get definition
+                    (cdr-safe (assoc-string (concat "[" (car langs) "]") json))))
+            (setq langs (cdr langs)))
+          result)
         (nonk/vscode-setting--get definition json)
         (cdr definition))))
 
