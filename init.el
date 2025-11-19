@@ -79,9 +79,13 @@ do that breaks a lot of external packages.")
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1))
 
+(use-package emacs
+  :custom
+  (enable-local-variables :all)
+  (enable-local-eval t))
+
 (use-package editorconfig
   :diminish
-  :straight (:type built-in)
   :custom (editorconfig-mode 1))
 
 (use-package magit
