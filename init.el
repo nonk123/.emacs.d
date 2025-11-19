@@ -41,6 +41,10 @@ do that breaks a lot of external packages.")
   (add-hook (intern (concat (symbol-name mode) "-hook"))
             (lambda () (run-hooks 'coding-hook))))
 
+(setq disabled-command-function nil)
+(setq kill-whole-line t)
+(delete-selection-mode 1)
+
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -49,9 +53,6 @@ do that breaks a lot of external packages.")
 
 (electric-indent-mode 1)
 (electric-pair-mode -1)
-
-(delete-selection-mode 1)
-(setq kill-whole-line t)
 
 ;; Thanks <https://justine.lol/sectorlisp2>.
 (unless standard-display-table
