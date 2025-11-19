@@ -96,6 +96,7 @@ do that breaks a lot of external packages.")
 
 (defun nonk/diff-hl-update-everywhere ()
   "Update `diff-hl' gutter in all buffers."
+  (interactive)
   (dolist (buf (buffer-list))
     (when (and (buffer-live-p buf) (buffer-file-name buf))
       (with-current-buffer buf (diff-hl--update-safe)))))
