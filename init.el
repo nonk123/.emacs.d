@@ -357,7 +357,8 @@ do that breaks a lot of external packages.")
            (bound-and-true-p self-hosted-email-addrs))))
 
 (use-package sanity
-  :straight (:type git :host github :repo "nonk123/sanity-emacs"))
+  :straight (:type git :host github :repo "nonk123/sanity-emacs")
+  :custom (sanity-mode 1))
 
 (use-package dape
   :custom
