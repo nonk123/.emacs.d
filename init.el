@@ -356,6 +356,9 @@ do that breaks a lot of external packages.")
                       (nnmail-expiry-wait immediate)))
            (bound-and-true-p self-hosted-email-addrs))))
 
+(use-package sanity
+  :straight (:type git :host github :repo "nonk123/sanity-emacs"))
+
 (use-package dape
   :custom
   (dape-breakpoint-global-mode 1)
@@ -405,46 +408,5 @@ do that breaks a lot of external packages.")
     (call-interactively #'suspend-frame)))
 
 (bind-key [remap suspend-frame] #'nonk/suspend-frame)
-
-;;; Sanity support:
-
-(require 'comint)
-
-(defvar nonk/sanity-path
-  (expand-file-name (concat "sanity/sanity" (when nonk/windose? ".exe")) user-emacs-directory)
-  "Full path to sanity binary.")
-
-(defun nonk/install-sanity ()
-  "Install the latest sanity binary from GitHub."
-  (interactive)
-  (let* ((base "https://github.com/nonk123/sanity/releases/download/gh-actions/sanity-release-")
-         (suffix (if nonk/windose? "windows.exe" "linux"))
-         (url (concat base suffix)))
-    (url-copy-file url nonk/sanity-path t)
-    (file-exists-p nonk/sanity-path)))
-
-(defun nonk/run-sanity ()
-  "Run a sanity live-server for this project.
-
-Signals a user-error if sanity is already running.  Make sure to kill
-its buffer if it is, before running again."
-  (interactive)
-  (unless (or (file-exists-p nonk/sanity-path)
-              (and (yes-or-no-p "Sanity binary couldn't be found.  Download it? ")
-                   (nonk/install-sanity)))
-    (user-error "Sanity binary can't be found"))
-  (if-let* ((project (project-current))
-            (buffer-name (concat "sanity: " (project-name project))))
-      (let ((buffer (get-buffer buffer-name)))
-        (when (buffer-live-p buffer)
-          (user-error "Sanity is already running in this project"))
-        (setq buffer (or buffer (get-buffer-create buffer-name)))
-        (with-current-buffer buffer
-          (ansi-color-for-comint-mode-on)
-          (comint-mode))
-        (let* ((default-directory (project-root project))
-               (process (start-process "sanity" buffer nonk/sanity-path "server")))
-          (set-process-filter process #'comint-output-filter)))
-    (user-error "You need to open a project to run sanity")))
 
 ;;; init.el ends here
