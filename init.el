@@ -1,4 +1,4 @@
-﻿;;; init.el --- nonk's GNU/Emacs config -*- lexical-binding: t; -*-
+;;; init.el --- nonk's GNU/Emacs config -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
