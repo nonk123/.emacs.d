@@ -268,6 +268,7 @@ do that breaks a lot of external packages.")
   :config (pm-around-advice #'lsp #'polymode-inhibit-in-indirect-buffers))
 
 (use-package poly-markdown
+  :diminish poly-gfm-mode poly-markdown-mode
   :mode ("\\.md\\'" . poly-markdown-mode))
 
 (use-package dockerfile-mode)
