@@ -369,7 +369,7 @@ do that breaks a lot of external packages.")
   (dape-buffer-window-arrangement 'right))
 
 (use-package cmake-integration
-  :straight (:type git :host github :repo "darcamo/cmake-integration")
+  :straight (:type git :host github :repo "nonk123/cmake-integration")
   :custom
   (cmake-integration-generator "Ninja")
   (cmake-integration-use-separated-compilation-buffer-for-each-target t)
