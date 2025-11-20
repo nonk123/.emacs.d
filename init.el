@@ -129,7 +129,8 @@ do that breaks a lot of external packages.")
   :bind-keymap ("C-c p" . projectile-command-map))
 
 (defvar nonk/vscode-setting-alist
-  '((format-on-save "editor.formatOnSave" t))
+  '(("editor.formatOnSave" t)
+    ("cmake.debugConfig" nil))
   "List of VSCode settings recognized by `nonk/vscode-setting'.")
 
 (defvar nonk/vscode-language-modes
@@ -138,13 +139,13 @@ do that breaks a lot of external packages.")
   "List of Emacs major-modes mapping to a list of possible VSCode language names.")
 
 (defun nonk/vscode-setting--get (definition alist)
-  "Fetch and parse a symbol's value from ALIST by its DEFINITION."
+  "Fetch and parse a setting's value from ALIST by its DEFINITION."
   (declare (indent 1))
   (cdr-safe (assoc-string (car definition) alist)))
 
-(defun nonk/vscode-setting (symbol)
-  "Return the value of SYMBOL setting defined in `nonk/vscode-setting-alist'."
-  (when-let* ((definition (alist-get symbol nonk/vscode-setting-alist))
+(defun nonk/vscode-setting (setting)
+  "Return the value of SETTING defined in `nonk/vscode-setting-alist'."
+  (when-let* ((definition (assoc-string setting nonk/vscode-setting-alist))
               (project (project-current))
               (root (project-root project))
               (settings-file (expand-file-name ".vscode/settings.json" root))
@@ -317,7 +318,7 @@ do that breaks a lot of external packages.")
 (defun nonk/format-on-save ()
   "Format the just saved file using the running language server."
   (interactive)
-  (when-let ((value (nonk/vscode-setting 'format-on-save)))
+  (when-let ((value (nonk/vscode-setting "editor.formatOnSave")))
     (if (eq value t)
         (nonk/format-on-save--real)
       (message "Formatting inhibited by VSCode settings.json"))))
@@ -383,6 +384,18 @@ do that breaks a lot of external packages.")
               ([f10] . cmake-integration-cmake-reconfigure))
   :preface
   (defvar cmake-project-mode-map (make-sparse-keymap)))
+
+(defvar cmake-integration-run-arguments)
+(declare-function cmake-integration-run-last-target "cmake-integration-launch.el")
+
+(defun nonk/cmake-integration-vscode-args ()
+  "Fetch args from `settings.json' for `cmake-integration-run-last-target'."
+  (setq cmake-integration-run-arguments "")
+  (when-let* ((config (nonk/vscode-setting "cmake.debugConfig"))
+              (args (cdr-safe (assoc-string "args" config))))
+    (setq cmake-integration-run-arguments
+          (seq-reduce (lambda (sum x) (if sum (concat sum " " x) x)) args nil))))
+(advice-add #'cmake-integration-run-last-target :before #'nonk/cmake-integration-vscode-args)
 
 ;; Thanks <https://github.com/darcamo/cmake-integration#example-keybindings>.
 
