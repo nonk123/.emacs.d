@@ -98,8 +98,8 @@ do that breaks a lot of external packages.")
   "Update `diff-hl' gutter in all buffers."
   (interactive)
   (dolist (buf (buffer-list))
-    (when (and (buffer-live-p buf) (buffer-file-name buf))
-      (with-current-buffer buf (diff-hl--update-safe)))))
+    (and (buffer-live-p buf) (buffer-file-name buf)
+         (with-current-buffer buf (diff-hl--update-safe)))))
 
 (use-package diff-hl
   :after magit
