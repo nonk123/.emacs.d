@@ -354,7 +354,7 @@ do that breaks a lot of external packages.")
                       (nnimap-stream tls)
                       (nnir-search-engine imap)
                       (nnmail-expiry-wait immediate)))
-           (bound-and-true-p self-hosted-email-addrs))))
+           (bound-and-true-p nonk/self-hosted-email-addrs))))
 
 (use-package sanity
   :straight (:type git :host github :repo "nonk123/sanity-emacs")
