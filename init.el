@@ -206,7 +206,7 @@ do that breaks a lot of external packages.")
 (use-package lsp-mode
   :demand t
   :functions lsp-format-buffer lsp-register-client make-lsp-client lsp-stdio-connection lsp-activate-on
-  :defines lsp-language-id-configuration
+  :defines lsp-mode-map lsp-language-id-configuration
   :custom
   (lsp-keymap-prefix "C-c l")
   (lsp-headerline-breadcrumb-enable nil)
@@ -216,6 +216,8 @@ do that breaks a lot of external packages.")
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   (lsp-clients-clangd-args '("--header-insertion=never"))
   :hook ((coding poly-markdown-mode) . lsp)
+  :bind (:map lsp-mode-map
+              ([f2] . lsp-rename))
   :config
   (add-to-list 'lsp-language-id-configuration '(cmake-ts-mode . "cmake"))
   (lsp-register-client
