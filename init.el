@@ -268,7 +268,7 @@ do that breaks a lot of external packages.")
 
 (use-package polymode
   :functions pm-around-advice polymode-inhibit-in-indirect-buffers
-  :init
+  :config
   (dolist (fun #'(lsp flycheck-mode))
     (pm-around-advice fun #'polymode-inhibit-in-indirect-buffers)))
 
