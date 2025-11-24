@@ -366,6 +366,10 @@ do that breaks a lot of external packages.")
   :straight (:type git :host github :repo "nonk123/sanity-emacs")
   :custom (sanity-mode 1))
 
+(use-package wakatime-mode
+  :diminish
+  :custom (global-wakatime-mode 1))
+
 (use-package dape
   :custom
   (dape-breakpoint-global-mode 1)
