@@ -310,6 +310,9 @@ do that breaks a lot of external packages.")
 (use-package wdired
   :custom (wdired-allow-to-change-permissions t))
 
+(use-package smerge-mode
+  :diminish)
+
 (defun nonk/format-on-save--real ()
   "Do the actual formatting."
   (cond
