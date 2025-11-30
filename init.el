@@ -119,6 +119,7 @@ do that breaks a lot of external packages.")
   (projectile-project-search-path
    `((,(expand-file-name "Sources" nonk/home) . 1)
      ("~" . 1))) ; `~` intentional: this finds `.emacs.d` automatically on Windows
+  (projectile-ignored-project-function #'nonk/ignore-project?)
   (projectile-current-project-on-switch 'keep)
   (projectile-enable-caching t)
   (projectile-indexing-method 'alien)
@@ -126,7 +127,14 @@ do that breaks a lot of external packages.")
   (projectile-auto-discover nil)
   (projectile-require-project-root t)
   (projectile-mode 1)
-  :bind-keymap ("C-c p" . projectile-command-map))
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :preface
+  (defun nonk/ignore-project? (root)
+    "Ignore project ROOTs inside straight.el repos directory."
+    (seq-reduce (lambda (sum path)
+                  (or sum (string-prefix-p path (expand-file-name root))))
+                (list (expand-file-name "straight" user-emacs-directory))
+                nil)))
 
 (defvar nonk/vscode-setting-alist
   '(("editor.formatOnSave" t)
