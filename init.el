@@ -305,6 +305,8 @@ do that breaks a lot of external packages.")
 (use-package rust-ts-mode
   :mode ("\\.rs\\'" . rust-ts-mode))
 
+(use-package glsl-mode)
+
 (defun nonk/enable-eldoc-box ()
   "Force `eldoc-box-hover-mode' on."
   (interactive)
