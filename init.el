@@ -289,6 +289,8 @@ do that breaks a lot of external packages.")
   :diminish poly-gfm-mode poly-markdown-mode
   :mode ("\\.md\\'" . poly-markdown-mode))
 
+;; BOOKMARK: major-modes.
+
 (use-package dockerfile-mode)
 
 (use-package yaml-ts-mode
