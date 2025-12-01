@@ -432,11 +432,13 @@ do that breaks a lot of external packages.")
 
 (define-minor-mode cmake-project-mode
   "Auto-enabled for buffers detected as belonging to a CMake project."
-  :group 'cmake
+  :group 'tools
+  :group 'convenience
   :keymap cmake-project-mode-map)
 
 (define-globalized-minor-mode detect-cmake-project-mode cmake-project-mode try-enable-cmake-project-mode
-  :group 'cmake)
+  :group 'tools
+  :group 'convenience)
 
 (detect-cmake-project-mode 1)
 
