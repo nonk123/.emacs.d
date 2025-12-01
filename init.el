@@ -131,10 +131,8 @@ do that breaks a lot of external packages.")
   :preface
   (defun nonk/ignore-project? (root)
     "Ignore project ROOTs inside straight.el repos directory."
-    (seq-reduce (lambda (sum path)
-                  (or sum (string-prefix-p path (expand-file-name root))))
-                (list (expand-file-name "straight" user-emacs-directory))
-                nil)))
+    (string-prefix-p (expand-file-name "straight" user-emacs-directory)
+                     (expand-file-name root))))
 
 (defvar nonk/vscode-setting-alist
   '(("editor.formatOnSave" t)
