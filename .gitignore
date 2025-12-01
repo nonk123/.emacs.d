@@ -13,7 +13,7 @@
 elisp/chezmoi-defs.el
 
 !snippets
-!snippets/**/*.yas
+!snippets/**/*
 
 !tree-sitter
 !tree-sitter/libtree-sitter-*.dll

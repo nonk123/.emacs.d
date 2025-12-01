@@ -196,7 +196,13 @@ do that breaks a lot of external packages.")
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :custom (yas-global-mode 1))
+  :custom
+  (yas-snippet-dirs
+   (list (expand-file-name "snippets" user-emacs-directory)))
+  (yas-global-mode 1))
+
+(use-package emacs
+  :mode ("LICENSE\\'" . text-mode))
 
 (use-package corfu
   :custom
