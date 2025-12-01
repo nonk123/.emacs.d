@@ -130,9 +130,10 @@ do that breaks a lot of external packages.")
   :bind-keymap ("C-c p" . projectile-command-map)
   :preface
   (defun nonk/ignore-project? (root)
-    "Ignore project ROOTs inside straight.el repos directory."
-    (string-prefix-p (expand-file-name "straight" user-emacs-directory)
-                     (expand-file-name root))))
+    "Ignore project ROOTs inside straight.el repos and CMake deps."
+    (let ((root (expand-file-name root)))
+      (or (string-prefix-p (expand-file-name "straight" user-emacs-directory) root)
+          (string-match-p "^.+?/build/_deps/" root)))))
 
 (defvar nonk/vscode-setting-alist
   '(("editor.formatOnSave" t)
