@@ -302,7 +302,7 @@ do that breaks a lot of external packages.")
 (use-package web-mode
   :mode "\\.html\\.j2\\'")
 
-(use-package emacs
+(use-package rust-ts-mode
   :mode ("\\.rs\\'" . rust-ts-mode))
 
 (defun nonk/enable-eldoc-box ()
