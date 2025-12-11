@@ -294,7 +294,7 @@ do that breaks a lot of external packages.")
 (use-package dockerfile-mode)
 
 (use-package yaml-ts-mode
-  :mode "\\.ya?ml\\'")
+  :mode "\\.ya?ml\\'" "\\.clang.+\\'")
 
 (use-package cmake-ts-mode
   :mode "CMakeLists\\.txt\\'" "\\.cmake\\'")
