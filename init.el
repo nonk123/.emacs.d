@@ -219,6 +219,7 @@ do that breaks a lot of external packages.")
 
 (use-package lsp-mode
   :demand t
+  :diminish lsp-lens-mode
   :functions lsp-format-buffer lsp-register-client make-lsp-client lsp-stdio-connection lsp-activate-on
   :defines lsp-mode-map lsp-language-id-configuration
   :custom
