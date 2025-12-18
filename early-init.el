@@ -19,8 +19,8 @@
 (setq initial-scratch-message "")
 
 ;; Thanks <https://stackoverflow.com/a/79042584>.
-(defvar nonk/monospaced-font "Iosevka" "The default monospaced font to use.")
-(add-to-list 'default-frame-alist (cons 'font (concat nonk/monospaced-font "-10")))
+(defvar nonk/monospaced-font "Iosevka Extended" "The default monospaced font to use.")
+(add-to-list 'default-frame-alist (cons 'font (concat nonk/monospaced-font "-9")))
 (set-face-attribute 'fixed-pitch nil :family nonk/monospaced-font)
 
 ;;; early-init.el ends here
