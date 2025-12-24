@@ -388,7 +388,7 @@ do that breaks a lot of external packages.")
 
 (use-package sanity
   :straight (:type git :host github :repo "nonk123/sanity-emacs")
-  :custom (sanity-mode 1))
+  :custom (sanity-mode -1))
 
 (use-package wakatime-mode
   :diminish
