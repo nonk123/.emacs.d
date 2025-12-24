@@ -77,6 +77,7 @@ do that breaks a lot of external packages.")
               ([remap backward-sexp] . sp-backward-sexp)
               ([remap transpose-sexp] . sp-transpose-sexp))
   :custom
+  (sp-ignore-modes-list '(web-mode))
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1))
 
