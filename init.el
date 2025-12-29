@@ -116,6 +116,7 @@ do that breaks a lot of external packages.")
 
 (use-package projectile
   :diminish
+  :defines projectile-other-file-alist
   :custom
   (projectile-project-search-path
    `((,(expand-file-name "Sources" nonk/home) . 1)
@@ -309,7 +310,10 @@ do that breaks a lot of external packages.")
   :mode ("\\.rs\\'" . rust-ts-mode))
 
 (use-package glsl-mode
-  :mode ("\\.\\(f|v\\)sh\\'" . glsl-mode))
+  :mode ("\\.\\(f|v\\)sh\\'" . glsl-mode)
+  :init
+  (add-to-list 'projectile-other-file-alist '("fsh" "vsh"))
+  (add-to-list 'projectile-other-file-alist '("vsh" "fsh")))
 
 (defun nonk/enable-eldoc-box ()
   "Force `eldoc-box-hover-mode' on."
