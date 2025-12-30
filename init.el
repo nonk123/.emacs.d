@@ -313,7 +313,6 @@ do that breaks a lot of external packages.")
   :straight (:type git :host github :repo "TideSofDarK/glsl-mode" :branch "better-ts-mode")
   :mode ("\\.\\(f\\|v\\)sh\\'" . glsl-ts-mode)
   :init
-  (require 'c-ts-mode)
   (add-to-list 'projectile-other-file-alist '("fsh" "vsh"))
   (add-to-list 'projectile-other-file-alist '("vsh" "fsh")))
 
