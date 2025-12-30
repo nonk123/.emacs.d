@@ -310,7 +310,7 @@ do that breaks a lot of external packages.")
   :mode ("\\.rs\\'" . rust-ts-mode))
 
 (use-package glsl-mode
-  :mode ("\\.\\(f|v\\)sh\\'" . glsl-mode)
+  :mode ("\\.\\(f\\|v\\)sh\\'" . glsl-mode)
   :init
   (add-to-list 'projectile-other-file-alist '("fsh" "vsh"))
   (add-to-list 'projectile-other-file-alist '("vsh" "fsh")))
