@@ -310,8 +310,10 @@ do that breaks a lot of external packages.")
   :mode ("\\.rs\\'" . rust-ts-mode))
 
 (use-package glsl-mode
-  :mode ("\\.\\(f\\|v\\)sh\\'" . glsl-mode)
+  :straight (:type git :host github :repo "TideSofDarK/glsl-mode" :branch "better-ts-mode")
+  :mode ("\\.\\(f\\|v\\)sh\\'" . glsl-ts-mode)
   :init
+  (require 'c-ts-mode)
   (add-to-list 'projectile-other-file-alist '("fsh" "vsh"))
   (add-to-list 'projectile-other-file-alist '("vsh" "fsh")))
 
