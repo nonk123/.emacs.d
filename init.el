@@ -144,6 +144,9 @@ do that breaks a lot of external packages.")
 
 (defvar nonk/vscode-language-modes
   '((c-mode "c")
+    (c-ts-mode "c")
+    (c++-mode "cpp")
+    (c++-ts-mode "cpp")
     (rust-ts-mode "rust")
     (web-mode "html" "jinja-html"))
   "List of Emacs major-modes mapping to a list of possible VSCode language names.")
