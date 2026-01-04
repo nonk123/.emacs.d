@@ -192,6 +192,16 @@ do that breaks a lot of external packages.")
 (use-package orderless
   :custom (completion-styles '(orderless basic partial-completion)))
 
+(use-package embark
+  :bind ("C-." . embark-act)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package flycheck
   :defines flycheck-mode-map
   :custom (global-flycheck-mode 1)
