@@ -234,7 +234,6 @@ do that breaks a lot of external packages.")
 
 (use-package lsp-mode
   :demand t
-  :diminish lsp-lens-mode
   :functions lsp-format-buffer lsp-register-client make-lsp-client lsp-stdio-connection lsp-activate-on
   :defines lsp-mode-map lsp-language-id-configuration
   :custom
@@ -245,6 +244,7 @@ do that breaks a lot of external packages.")
   (lsp-eldoc-render-all t)
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   (lsp-clients-clangd-args '("--header-insertion=never"))
+  (lsp-lens-enable nil)
   :hook ((coding poly-markdown-mode) . lsp)
   :bind (:map lsp-mode-map
               ([f2] . lsp-rename))
