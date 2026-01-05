@@ -245,6 +245,7 @@ do that breaks a lot of external packages.")
   (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
   (lsp-clients-clangd-args '("--header-insertion=never"))
   (lsp-lens-enable nil)
+  (lsp-modeline-diagnostics-enable nil)
   :hook ((coding poly-markdown-mode) . lsp)
   :bind (:map lsp-mode-map
               ([f2] . lsp-rename))
