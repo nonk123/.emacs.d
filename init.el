@@ -36,7 +36,8 @@ do that breaks a lot of external packages.")
   "Functions to be run whenever I'm coding.")
 
 (defvar nonk/coding-modes
-  '(c-mode c-ts-mode c++-mode c++-ts-mode cmake-ts-mode rust-ts-mode yaml-ts-mode))
+  '( c-mode c-ts-mode c++-mode c++-ts-mode cmake-ts-mode rust-ts-mode yaml-ts-mode
+     js-mode js-ts-mode))
 (dolist (mode nonk/coding-modes)
   (add-hook (intern (concat (symbol-name mode) "-hook"))
             (lambda () (run-hooks 'coding-hook))))
@@ -148,7 +149,9 @@ do that breaks a lot of external packages.")
     (c++-mode "cpp")
     (c++-ts-mode "cpp")
     (rust-ts-mode "rust")
-    (web-mode "html" "jinja-html"))
+    (web-mode "html" "jinja-html")
+    (js-mode "javascript")
+    (js-ts-mode "javascript"))
   "List of Emacs major-modes mapping to a list of possible VSCode language names.")
 
 (defun nonk/vscode-setting--get (definition alist)
