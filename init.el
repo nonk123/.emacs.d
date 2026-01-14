@@ -245,7 +245,7 @@ do that breaks a lot of external packages.")
   (lsp-completion-provider :none)
   (lsp-enable-suggest-server-download nil)
   (lsp-eldoc-render-all t)
-  (lsp-clangd-binary-path "clangd") ; assuming `PATH` is correct
+  (lsp-clangd-binary-path "clangd") ; assuming `PATH` contains it
   (lsp-clients-clangd-args '("--header-insertion=never"))
   (lsp-lens-enable nil)
   (lsp-modeline-diagnostics-enable nil)
